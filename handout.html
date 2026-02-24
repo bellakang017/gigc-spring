@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interview Instinct — Discover Your Natural Style</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>">
+  <meta name="theme-color" content="#C9A96E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --noir: #1D1D1F;
+      --charcoal: #424245;
+      --grey: #6E6E73;
+      --silver: #86868B;
+      --mist: #D2D2D7;
+      --cloud: #F5F5F7;
+      --snow: #FAFAFA;
+      --white: #FFFFFF;
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-wash: #FAF6EF;
+      --gold-deep: #A68B4B;
+      --blush: #F2D4D7;
+      --blush-light: #FBF0F1;
+      --sage: #6B8F71;
+      --sage-light: #EFF3ED;
+      --ocean: #5B7FA5;
+      --ocean-light: #ECF1F6;
+      --berry: #A05B6B;
+      --berry-light: #F5EAED;
+      --lavender: #8B7BAE;
+      --lavender-light: #F0ECF5;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+      --hand: 'Caveat', cursive;
+      --radius: 16px;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--charcoal);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media print {
+      body { background: white; font-size: 10pt; }
+      .no-print { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .hero { min-height: auto; padding: 2rem 0; }
+      .animal-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+      section { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+    .hero {
+      min-height: 50vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      background: var(--white);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 600px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mist), transparent);
+    }
+    .hero-bee {
+      font-size: 2.6rem;
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 4px 16px rgba(201,169,110,0.15));
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--noir);
+      margin-top: 0.6rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1rem; font-weight: 300;
+      color: var(--grey); margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .hero-meta { margin-top: 1.8rem; }
+    .pill {
+      display: inline-block; padding: 0.4rem 1.2rem;
+      background: var(--cloud);
+      border: 1px solid var(--mist);
+      border-radius: 30px; font-size: 0.72rem;
+      font-weight: 500; color: var(--charcoal);
+      letter-spacing: 0.02em;
+    }
+    .hero-date {
+      margin-top: 0.5rem; font-size: 0.78rem;
+      color: var(--silver); letter-spacing: 0.01em;
+    }
+    .divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; margin: 3rem auto; max-width: 300px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mist), transparent);
+    }
+    .divider-icon { font-size: 0.65rem; color: var(--gold); }
+    .quote { text-align: center; padding: 1.5rem 2.5rem; max-width: 520px; margin: 0 auto; }
+    .quote blockquote {
+      font-family: var(--serif); font-style: italic;
+      font-size: 1rem; line-height: 1.7; color: var(--grey);
+    }
+    .quote cite {
+      display: block; margin-top: 0.6rem;
+      font-family: var(--sans); font-style: normal;
+      font-size: 0.6rem; font-weight: 600;
+      color: var(--silver); letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .name-field { text-align: center; margin: 2rem 0 3rem; }
+    .name-field label {
+      font-family: var(--serif); font-size: 0.9rem;
+      font-weight: 500; color: var(--charcoal);
+    }
+    .name-field input {
+      display: block; margin: 0.6rem auto 0; width: 320px; max-width: 90%;
+      border: none; border-bottom: 1px solid var(--mist);
+      background: transparent; font-family: var(--hand);
+      font-size: 1.4rem; text-align: center; padding: 0.3rem 0;
+      color: var(--noir); transition: border-color 0.4s;
+    }
+    .name-field input:focus { outline: none; border-color: var(--gold); }
+    .name-field input::placeholder { color: var(--mist); font-size: 1.1rem; }
+    .section-header { text-align: center; margin-bottom: 2rem; }
+    .section-header h2 {
+      font-family: var(--serif); font-size: 1.8rem;
+      font-weight: 400; letter-spacing: -0.02em; color: var(--noir);
+    }
+    .section-header h2 em { font-style: italic; color: var(--gold); }
+    .section-header p { font-size: 0.88rem; color: var(--grey); margin-top: 0.3rem; font-weight: 300; }
+    .animal-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 720px) { .animal-grid { grid-template-columns: repeat(2, 1fr); } }
+    .animal-card {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.6rem 0.8rem 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all .4s cubic-bezier(.16,1,.3,1);
+      position: relative;
+    }
+    .animal-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold-light);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+    .animal-card.selected {
+      border-color: var(--gold);
+      background: var(--gold-wash);
+      box-shadow: 0 8px 30px rgba(201,169,110,0.12);
+    }
+    .animal-card.selected::after {
+      content: '\2726'; position: absolute; top: 10px; right: 12px;
+      font-size: 0.65rem; color: var(--gold);
+    }
+    .animal-emoji {
+      font-size: 2.2rem; display: block; margin-bottom: 0.6rem;
+      transition: transform .4s cubic-bezier(.16,1,.3,1);
+    }
+    .animal-card:hover .animal-emoji { transform: scale(1.15); }
+    .animal-name {
+      font-family: var(--serif); font-weight: 600;
+      font-size: 0.85rem; color: var(--noir);
+    }
+    .animal-power {
+      font-size: 0.6rem; font-weight: 600; color: var(--gold);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px;
+    }
+    .animal-prompt {
+      font-size: 0.7rem; font-style: italic; color: var(--grey);
+      line-height: 1.45; margin-top: 0.5rem;
+    }
+    .my-selection {
+      background: var(--snow);
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .my-selection h3 {
+      font-family: var(--serif); font-size: 1rem; font-weight: 600;
+      color: var(--noir); margin-bottom: 1.2rem;
+    }
+    .sel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    @media (max-width: 540px) { .sel-grid { grid-template-columns: 1fr; } }
+    .sel-grid label {
+      font-size: 0.6rem; font-weight: 600; color: var(--silver);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      display: block; margin-bottom: 4px;
+    }
+    .sel-grid input {
+      width: 100%; border: none;
+      border-bottom: 1px dashed var(--mist);
+      background: transparent; font-family: var(--hand);
+      font-size: 1.2rem; padding: 0.25rem 0; color: var(--noir);
+    }
+    .sel-grid input:focus { outline: none; border-style: solid; border-color: var(--gold); }
+    .hive-intro { text-align: center; margin-bottom: 2rem; }
+    .hive-hexagons {
+      display: flex; justify-content: center; gap: 6px;
+      margin: 1rem 0 0.6rem;
+    }
+    .hex {
+      width: 44px; height: 44px;
+      background: var(--noir);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-weight: 700;
+      font-size: 1rem; color: var(--white);
+      transition: all 0.3s;
+    }
+    .hex:hover { background: var(--gold); transform: scale(1.08); }
+    .hive-sub { font-size: 0.82rem; color: var(--grey); font-weight: 300; }
+    .hive-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 540px) { .hive-grid { grid-template-columns: 1fr; } }
+    .hive-cell {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .hive-cell:focus-within {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-wash);
+    }
+    .hive-letter {
+      font-family: var(--serif); font-weight: 700;
+      font-size: 1.6rem; color: var(--gold);
+      line-height: 1; float: left; margin-right: 0.5rem; margin-top: -2px;
+    }
+    .hive-label { font-family: var(--serif); font-weight: 600; font-size: 0.92rem; color: var(--noir); }
+    .hive-hint { font-size: 0.75rem; color: var(--grey); margin-bottom: 0.6rem; font-weight: 300; clear: both; }
+    .hive-cell textarea {
+      width: 100%; border: none;
+      background: var(--cloud);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      font-family: var(--hand); font-size: 1.15rem;
+      line-height: 1.5; min-height: 72px; resize: vertical;
+      color: var(--noir); transition: background .3s;
+    }
+    .hive-cell textarea:focus { outline: none; background: var(--gold-wash); }
+    .hive-cell textarea::placeholder { color: var(--mist); }
+    .practice-box {
+      background: var(--noir);
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .practice-box::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(201,169,110,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .practice-box h3 {
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 500;
+      color: var(--white); margin-bottom: 0.5rem; position: relative;
+    }
+    .practice-box p {
+      font-size: 0.88rem; color: var(--silver);
+      line-height: 1.6; position: relative;
+    }
+    .timer-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1.2rem; padding: 0.7rem 2rem;
+      background: var(--gold); color: var(--white); border: none;
+      border-radius: 30px; font-family: var(--sans);
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      transition: all .3s; position: relative;
+      letter-spacing: 0.02em;
+    }
+    .timer-btn:hover {
+      background: var(--gold-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,169,110,0.3);
+    }
+    .timer-btn.running { background: var(--berry); }
+    .timer-btn.running:hover { background: #8A4A58; }
+    .timer-display {
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 700;
+      color: var(--gold); margin-top: 0.6rem; position: relative;
+    }
+    .timer-display.warning { color: var(--berry); animation: pulse .5s ease-in-out infinite alternate; }
+    @keyframes pulse { from { opacity: 1; } to { opacity: 0.5; } }
+    .feedback-box {
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      background: var(--white);
+      margin-bottom: 3rem;
+    }
+    .feedback-box label { font-family: var(--serif); font-size: 0.88rem; font-weight: 500; color: var(--charcoal); }
+    .feedback-box textarea {
+      width: 100%; border: none; background: transparent;
+      font-family: var(--hand); font-size: 1.15rem;
+      min-height: 50px; resize: vertical; margin-top: 0.5rem;
+      color: var(--noir); line-height: 1.5;
+    }
+    .feedback-box textarea:focus { outline: none; }
+    .feedback-box textarea::placeholder { color: var(--mist); }
+    .toolkit-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2.5rem; }
+    @media (max-width: 540px) { .toolkit-steps { grid-template-columns: 1fr; } }
+    .toolkit-step {
+      background: var(--white); border: 1px solid var(--mist);
+      border-radius: var(--radius); padding: 1.6rem 1.2rem; text-align: center;
+      transition: all .3s;
+    }
+    .toolkit-step:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.05); }
+    .toolkit-step .step-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .toolkit-step h4 { font-family: var(--serif); font-size: 0.92rem; font-weight: 600; color: var(--noir); }
+    .toolkit-step p { font-size: 0.78rem; color: var(--grey); font-weight: 300; margin-top: 0.3rem; line-height: 1.5; }
+    .exercise {
+      margin-bottom: 1.5rem; border-radius: var(--radius); overflow: hidden;
+      background: var(--white); border: 1px solid var(--mist);
+      transition: border-color .3s;
+    }
+    .exercise:focus-within { border-color: var(--gold-light); }
+    .exercise-header { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .exercise.ask .exercise-header { background: var(--ocean-light); }
+    .exercise.structure .exercise-header { background: var(--sage-light); }
+    .exercise.refine .exercise-header { background: var(--berry-light); }
+    .exercise-header h3 { font-family: var(--serif); font-size: 0.88rem; font-weight: 600; color: var(--noir); }
+    .exercise-body { padding: 1.5rem; }
+    .exercise-context {
+      font-size: 0.78rem; color: var(--grey); line-height: 1.65;
+      margin-bottom: 1rem; font-weight: 300;
+    }
+    .exercise-prompt {
+      font-size: 0.88rem; color: var(--charcoal); font-style: italic;
+      margin-bottom: 1rem; padding: 0.8rem 1.2rem;
+      background: var(--cloud); border-radius: 10px;
+      border-left: 2px solid var(--gold-light); line-height: 1.65;
+    }
+    .mece-explainer {
+      background: var(--snow); border: 1px solid var(--mist);
+      border-radius: 12px; padding: 1.2rem 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .mece-explainer h4 {
+      font-family: var(--serif); font-size: 0.85rem;
+      font-weight: 600; color: var(--noir); margin-bottom: 0.5rem;
+    }
+    .mece-explainer p {
+      font-size: 0.78rem; color: var(--grey); line-height: 1.6; font-weight: 300;
+    }
+    .mece-example {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+    @media (max-width: 540px) { .mece-example { grid-template-columns: 1fr; } }
+    .mece-example-box {
+      padding: 0.6rem 0.8rem; border-radius: 8px;
+      font-size: 0.72rem; line-height: 1.5;
+    }
+    .mece-bad { background: var(--berry-light); color: var(--berry); }
+    .mece-good { background: var(--sage-light); color: var(--sage); }
+    .mece-example-box strong { display: block; margin-bottom: 2px; }
+    .exercise textarea {
+      width: 100%; border: 1px solid var(--mist); border-radius: 10px;
+      padding: 0.8rem; font-family: var(--hand); font-size: 1.15rem;
+      line-height: 1.5; min-height: 88px; resize: vertical;
+      color: var(--noir); background: var(--snow); transition: all .3s;
+    }
+    .exercise textarea:focus {
+      outline: none; border-color: var(--gold);
+      background: var(--gold-wash);
+      box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
+    }
+    .exercise textarea::placeholder { color: var(--mist); }
+    .footer-quote { text-align: center; padding: 3rem 2rem 1.5rem; }
+    .footer-quote blockquote {
+      font-family: var(--serif); font-style: italic;
+      font-size: 1rem; color: var(--grey);
+      max-width: 480px; margin: 0 auto; line-height: 1.7;
+    }
+    .footer-quote cite {
+      display: block; font-family: var(--sans); font-style: normal;
+      font-size: 0.6rem; font-weight: 600; color: var(--silver);
+      margin-top: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .footer-credits {
+      text-align: center; padding: 1.5rem 2rem 4rem;
+      font-size: 0.75rem; color: var(--silver); line-height: 1.8;
+    }
+    .footer-credits strong { color: var(--charcoal); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bee">🐝</div>
+    <h1>Interview <em>Instinct</em></h1>
+    <p class="hero-sub">Discover your natural interview style.</p>
+    <div class="hero-meta">
+      <span class="pill">International Job Search Working Group · Workshop #2</span>
+      <p class="hero-date">February 24, 2026 · 3:00–4:00 PM · FAC 2.134</p>
+    </div>
+  </header>
+  <div class="quote reveal">
+    <blockquote>"Every individual matters. Every individual has a role to play. Every individual makes a difference."</blockquote>
+    <cite>Jane Goodall</cite>
+  </div>
+  <div class="container">
+    <div class="name-field reveal">
+      <label for="userName">Your Beautiful Name</label>
+      <input type="text" id="userName" placeholder="write here...">
+    </div>
+    <div class="divider"><span class="divider-icon">✦</span></div>
+    <section class="reveal">
+      <div class="section-header">
+        <h2>Find Your <em>Instinct</em></h2>
+        <p>Everyone interviews differently. Tap the animal that matches how you naturally show up.</p>
+      </div>
+      <div class="animal-grid" id="animalGrid">
+        <div class="animal-card" data-power="Creates trust" data-prompt="A time you made someone feel supported" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🐑</span>
+          <div class="animal-name">Baby Lamb</div>
+          <div class="animal-power">Creates Trust</div>
+          <div class="animal-prompt">A time you made someone feel supported</div>
+        </div>
+        <div class="animal-card" data-power="Reads the room" data-prompt="When you adapted for different audiences" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🐱</span>
+          <div class="animal-name">Wise Cat</div>
+          <div class="animal-power">Reads the Room</div>
+          <div class="animal-prompt">When you adapted for different audiences</div>
+        </div>
+        <div class="animal-card" data-power="Real-world solver" data-prompt="When you solved a problem in chaos" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🐕</span>
+          <div class="animal-name">Loyal Pup</div>
+          <div class="animal-power">Real-World Solver</div>
+          <div class="animal-prompt">When you solved a problem in chaos</div>
+        </div>
+        <div class="animal-card" data-power="Builds rapport" data-prompt="When you connected people or ideas" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🐰</span>
+          <div class="animal-name">Social Bunny</div>
+          <div class="animal-power">Builds Rapport</div>
+          <div class="animal-prompt">When you connected people or ideas</div>
+        </div>
+        <div class="animal-card" data-power="Airtight prep" data-prompt="Walk through analyzing a complex problem" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🦉</span>
+          <div class="animal-name">Night Owl</div>
+          <div class="animal-power">Airtight Prep</div>
+          <div class="animal-prompt">Walk through analyzing a complex problem</div>
+        </div>
+        <div class="animal-card" data-power="Fresh angles" data-prompt="When you found an unexpected solution" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🦊</span>
+          <div class="animal-name">Clever Fox</div>
+          <div class="animal-power">Fresh Angles</div>
+          <div class="animal-prompt">When you found an unexpected solution</div>
+        </div>
+        <div class="animal-card" data-power="Under pressure" data-prompt="A tough call you made under pressure" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🐻</span>
+          <div class="animal-name">Bold Bear</div>
+          <div class="animal-power">Under Pressure</div>
+          <div class="animal-prompt">A tough call you made under pressure</div>
+        </div>
+        <div class="animal-card" data-power="Big-picture" data-prompt="How global perspective changed an outcome" onclick="selectAnimal(this)">
+          <span class="animal-emoji">🦋</span>
+          <div class="animal-name">Free Butterfly</div>
+          <div class="animal-power">Big-Picture</div>
+          <div class="animal-prompt">How global perspective changed an outcome</div>
+        </div>
+      </div>
+    </section>
+    <div class="my-selection reveal">
+      <h3>My Instinct</h3>
+      <div class="sel-grid">
+        <div><label>My Animal</label><input type="text" id="selAnimal" readonly placeholder="tap one above"></div>
+        <div><label>My Superpower</label><input type="text" id="selPower" readonly placeholder="—"></div>
+        <div><label>My Story Prompt</label><input type="text" id="selPrompt" readonly placeholder="—"></div>
+      </div>
+    </div>
+    <div class="divider"><span class="divider-icon">✦</span></div>
+    <section class="reveal page-break">
+      <div class="hive-intro">
+        <div class="section-header" style="margin-bottom:0.4rem;">
+          <h2>Build Your <em>HIVE</em></h2>
+        </div>
+        <div class="hive-hexagons"><div class="hex">H</div><div class="hex">I</div><div class="hex">V</div><div class="hex">E</div></div>
+        <p class="hive-sub">Every bee in a hive has a role. In an interview, you do too.</p>
+      </div>
+      <div class="hive-grid">
+        <div class="hive-cell"><span class="hive-letter">H</span><div class="hive-label">Habitat</div><div class="hive-hint">Set the scene. Where, when, what was happening?</div><textarea placeholder="The setting was..."></textarea></div>
+        <div class="hive-cell"><span class="hive-letter">I</span><div class="hive-label">Initiative</div><div class="hive-hint">What was your role? Why did you step up?</div><textarea placeholder="I took the lead because..."></textarea></div>
+        <div class="hive-cell"><span class="hive-letter">V</span><div class="hive-label">Venture</div><div class="hive-hint">What did you do? Be specific about your choices.</div><textarea placeholder="The specific steps I took were..."></textarea></div>
+        <div class="hive-cell"><span class="hive-letter">E</span><div class="hive-label">Effect</div><div class="hive-hint">What happened? Numbers help.</div><textarea placeholder="The result was..."></textarea></div>
+      </div>
+    </section>
+    <div class="practice-box reveal">
+      <h3>60-Second Practice</h3>
+      <p>Partner up. Tell your HIVE story in 60 seconds.<br>Your partner gives one strength, one suggestion. Then switch!</p>
+      <button class="timer-btn no-print" id="timerBtn" onclick="toggleTimer()">&#9654; &nbsp;Start 60s Timer</button>
+      <div class="timer-display" id="timerDisplay" style="display:none;">60</div>
+    </div>
+    <div class="feedback-box reveal">
+      <label>Partner feedback</label>
+      <textarea placeholder="What they said about my story..."></textarea>
+    </div>
+    <div class="divider"><span class="divider-icon">✦</span></div>
+    <section class="reveal page-break">
+      <div class="section-header">
+        <h2>Sharpen Your <em>Thinking</em></h2>
+        <p>Top firms like McKinsey now test how you think through problems — not what you already know.<br>Here are three tools they look for. Let's practice them right now.</p>
+      </div>
+      <div class="toolkit-steps">
+        <div class="toolkit-step"><div class="step-icon">🔍</div><h4>Ask</h4><p>A vague question gets a vague answer. Sharpen the question first.</p></div>
+        <div class="toolkit-step"><div class="step-icon">🧩</div><h4>Structure</h4><p>Break a big messy problem into clean pieces. Think out loud, not in circles.</p></div>
+        <div class="toolkit-step"><div class="step-icon">✏️</div><h4>Refine</h4><p>Your first answer is a draft. Look for what's missing and make it better.</p></div>
+      </div>
+      <div class="exercise ask">
+        <div class="exercise-header"><h3>Ask — Make this question sharper</h3></div>
+        <div class="exercise-body">
+          <div class="exercise-context">Notice the difference: "I can't do this" shuts the door. "How can I learn to do this?" opens it. The same applies to interview questions — a sharper question gets you a sharper answer.</div>
+          <div class="exercise-prompt">"I'm not good at interviews. How do I fix that?"</div>
+          <textarea placeholder="Rewrite it so the answer becomes clearer..."></textarea>
+        </div>
+      </div>
+      <div class="exercise structure">
+        <div class="exercise-header"><h3>Structure — Sort this into clean buckets</h3></div>
+        <div class="exercise-body">
+          <div class="mece-explainer">
+            <h4>What are "clean buckets"?</h4>
+            <p>In consulting, they call this MECE (say "me-see"). It just means: your categories shouldn't overlap, and together they should cover everything. That's it.</p>
+            <div class="mece-example">
+              <div class="mece-example-box mece-bad"><strong>Overlapping (not MECE)</strong>"Skills" and "Hard skills" — one lives inside the other.</div>
+              <div class="mece-example-box mece-good"><strong>Clean (MECE)</strong>"Mindset," "Preparation," "Communication" — each is separate, together they cover a lot.</div>
+            </div>
+          </div>
+          <div class="exercise-prompt">"What holds people back from showing their best selves in interviews?"</div>
+          <textarea placeholder="Bucket 1:&#10;Bucket 2:&#10;Bucket 3:"></textarea>
+        </div>
+      </div>
+      <div class="exercise refine">
+        <div class="exercise-header"><h3>Refine — What's missing from this advice?</h3></div>
+        <div class="exercise-body">
+          <div class="exercise-context">This advice sounds safe — but it's all about avoiding mistakes instead of actually growing. Read it and think: what's missing?</div>
+          <div class="exercise-prompt">"To do well in interviews, memorize your answers, avoid talking about weaknesses, and stick to what you already know."</div>
+          <textarea placeholder="What's missing here..."></textarea>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="footer-quote reveal">
+    <blockquote>"Only when our clever brain and our human heart work together in harmony can we achieve our full potential."</blockquote>
+    <cite>Jane Goodall</cite>
+  </div>
+  <div class="footer-credits">
+    By <strong>Bella Kang</strong> · M.A. Advertising · Graduate Global Impact Consultant<br>
+    Office of Career &amp; Life Design, UT Austin · February 2026
+  </div>
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    function selectAnimal(card) {
+      document.querySelectorAll('.animal-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      document.getElementById('selAnimal').value = card.querySelector('.animal-name').textContent;
+      document.getElementById('selPower').value = card.dataset.power;
+      document.getElementById('selPrompt').value = card.dataset.prompt;
+    }
+    let timerInterval = null, timeLeft = 60;
+    function toggleTimer() {
+      const btn = document.getElementById('timerBtn');
+      const disp = document.getElementById('timerDisplay');
+      if (timerInterval) {
+        clearInterval(timerInterval); timerInterval = null;
+        btn.innerHTML = '&#9654; &nbsp;Start 60s Timer'; btn.classList.remove('running');
+        disp.style.display = 'none'; disp.classList.remove('warning'); timeLeft = 60;
+        return;
+      }
+      timeLeft = 60; disp.style.display = 'block'; disp.textContent = '60';
+      disp.classList.remove('warning');
+      btn.innerHTML = '&#9632; &nbsp;Stop'; btn.classList.add('running');
+      timerInterval = setInterval(() => {
+        timeLeft--; disp.textContent = timeLeft;
+        if (timeLeft <= 10) disp.classList.add('warning');
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval); timerInterval = null;
+          disp.textContent = "Time!";
+          btn.innerHTML = '&#8634; &nbsp;Reset'; btn.classList.remove('running');
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
