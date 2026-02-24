@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Instinct — Result Demo</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐰</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --noir: #1D1D1F; --charcoal: #424245; --grey: #6E6E73; --silver: #86868B;
+  --mist: #D2D2D7; --cloud: #F5F5F7; --snow: #FAFAFA; --white: #FFFFFF;
+  --gold: #C9A96E; --gold-light: #E8D5B0; --gold-wash: #FAF6EF; --gold-deep: #A68B4B;
+  --rose: #D4727E; --rose-light: #FBF0F1;
+  --sage: #6B8F71; --sage-light: #EFF3ED;
+  --ocean: #5B7FA5; --ocean-light: #ECF1F6;
+  --berry: #A05B6B; --berry-light: #F5EAED;
+  --lavender: #8B7BAE; --lavender-light: #F0ECF5;
+  --peach: #D4956B; --peach-light: #FDF3EC;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --hand: 'Caveat', cursive;
+  --radius: 16px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); font-size: 16px; line-height: 1.6; color: var(--charcoal); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.container { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Hero */
+.hero { text-align: center; padding: 3rem 1.5rem 2rem; }
+.hero-label { font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+.hero h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; color: var(--noir); line-height: 1.1; }
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: .9rem; color: var(--grey); margin-top: .4rem; font-weight: 300; }
+
+.divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 2rem auto; max-width: 200px; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--mist), transparent); }
+.divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+/* Result Card */
+.result-card { background: var(--white); border: 1px solid var(--mist); border-radius: 20px; overflow: hidden; margin-bottom: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,.04); }
+.result-header { text-align: center; padding: 2.5rem 2rem 1.5rem; background: linear-gradient(180deg, var(--rose-light) 0%, var(--white) 100%); }
+.result-emoji { font-size: 4rem; display: block; margin-bottom: .3rem; }
+.result-name { font-family: var(--serif); font-size: 1.8rem; font-weight: 600; color: var(--noir); }
+.result-title { font-size: .85rem; color: var(--gold); font-weight: 500; margin-top: .1rem; }
+.result-code { font-size: .65rem; font-weight: 600; letter-spacing: .12em; color: var(--silver); margin-top: .4rem; }
+.result-tagline { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--grey); margin-top: .8rem; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+.result-body { padding: 1.5rem 2rem 2rem; }
+
+.section-label { font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .5rem; }
+
+/* Dimensions */
+.dims { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .8rem; margin-bottom: 2rem; }
+@media (max-width: 540px) { .dims { grid-template-columns: 1fr; } }
+.dim-card { background: var(--snow); border: 1px solid var(--mist); border-radius: 12px; padding: 1rem; text-align: center; }
+.dim-phase { font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .3rem; }
+.dim-bar-wrap { height: 6px; background: var(--cloud); border-radius: 3px; margin: .5rem 0; overflow: hidden; }
+.dim-bar { height: 100%; border-radius: 3px; transition: width 1s ease; }
+.dim-labels { display: flex; justify-content: space-between; font-size: .65rem; color: var(--silver); }
+.dim-result { font-family: var(--serif); font-weight: 600; font-size: .9rem; color: var(--noir); margin-top: .3rem; }
+
+/* Superpower */
+.superpower { background: var(--gold-wash); border: 1px solid var(--gold-light); border-radius: 14px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; }
+.superpower p { font-size: .9rem; color: var(--charcoal); line-height: 1.6; }
+
+/* Strengths */
+.strengths { margin-bottom: 1.5rem; }
+.strength-item { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem 0; border-bottom: 1px solid var(--cloud); }
+.strength-item:last-child { border: none; }
+.strength-check { color: var(--sage); font-weight: 700; font-size: .85rem; margin-top: 2px; flex-shrink: 0; }
+.strength-text { font-size: .88rem; color: var(--charcoal); line-height: 1.5; }
+.strength-text strong { color: var(--noir); }
+
+/* HIVE Prompt */
+.hive-prompt { background: var(--snow); border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; }
+.hive-prompt p { font-family: var(--serif); font-style: italic; font-size: .95rem; color: var(--noir); line-height: 1.6; }
+
+/* Watch Out */
+.watchout { margin-bottom: 1.5rem; }
+.watchout-item { display: flex; align-items: flex-start; gap: .6rem; padding: .4rem 0; }
+.watchout-icon { color: var(--peach); font-size: .8rem; margin-top: 3px; flex-shrink: 0; }
+.watchout-text { font-size: .85rem; color: var(--grey); line-height: 1.5; }
+
+/* Actions */
+.actions { margin-bottom: 1.5rem; }
+.action-item { display: flex; align-items: flex-start; gap: .6rem; padding: .5rem 0; border-bottom: 1px solid var(--cloud); }
+.action-item:last-child { border: none; }
+.action-num { font-family: var(--serif); font-weight: 700; font-size: .9rem; color: var(--gold); flex-shrink: 0; width: 20px; }
+.action-text { font-size: .88rem; color: var(--charcoal); line-height: 1.5; }
+
+/* Careers & Icons */
+.careers { background: var(--cloud); border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+.careers p { font-size: .82rem; color: var(--grey); line-height: 1.6; }
+.icons { text-align: center; font-size: .8rem; color: var(--silver); font-style: italic; margin-bottom: 1rem; }
+
+/* HIVE Example */
+.hive-example { margin-bottom: 2rem; }
+.hive-example h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; color: var(--noir); margin-bottom: .3rem; }
+.hive-example .sub { font-size: .82rem; color: var(--grey); margin-bottom: 1rem; font-weight: 300; }
+.hive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+@media (max-width: 540px) { .hive-grid { grid-template-columns: 1fr; } }
+.hive-cell { background: var(--white); border: 1px solid var(--mist); border-radius: 12px; padding: 1.2rem; }
+.hive-letter { font-family: var(--serif); font-weight: 700; font-size: 1.4rem; color: var(--gold); line-height: 1; float: left; margin-right: .4rem; }
+.hive-label { font-family: var(--serif); font-weight: 600; font-size: .85rem; color: var(--noir); }
+.hive-hint { font-size: .7rem; color: var(--silver); margin-bottom: .4rem; clear: both; }
+.hive-text { font-family: var(--hand); font-size: 1.1rem; color: var(--charcoal); line-height: 1.5; background: var(--gold-wash); border-radius: 8px; padding: .5rem .7rem; margin-top: .4rem; }
+
+/* CTA */
+.cta { text-align: center; padding: 2rem 1.5rem 3rem; }
+.cta h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--noir); margin-bottom: .3rem; }
+.cta p { font-size: .85rem; color: var(--grey); margin-bottom: 1rem; }
+.cta-link { display: inline-block; padding: .7rem 2rem; background: var(--noir); color: var(--white); border-radius: 30px; font-size: .82rem; font-weight: 600; text-decoration: none; letter-spacing: .02em; transition: all .3s; }
+.cta-link:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,169,110,.3); }
+
+.footer { text-align: center; padding: 1rem 1.5rem 2.5rem; font-size: .72rem; color: var(--silver); line-height: 1.7; }
+.footer strong { color: var(--charcoal); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="hero reveal">
+  <div class="hero-label">Facilitator Demo — IWG Workshop #2</div>
+  <h1>Your Result <em>Explained</em></h1>
+  <p class="hero-sub">Here's what your profile looks like and how to use it.</p>
+</header>
+
+<div class="container">
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ═══ RESULT CARD ═══ -->
+  <div class="result-card reveal">
+    <div class="result-header">
+      <span class="result-emoji">🐰</span>
+      <div class="result-name">Social Bunny</div>
+      <div class="result-title">The Bridge Builder</div>
+      <div class="result-code">H O F — Heart / Adaptive / Generalist</div>
+      <p class="result-tagline">"Everyone has something brilliant to bring to the table."</p>
+    </div>
+
+    <div class="result-body">
+      <!-- Dimensions -->
+      <div class="section-label" style="color:var(--ocean)">Your Three Dimensions</div>
+      <div class="dims">
+        <div class="dim-card">
+          <div class="dim-phase" style="color:var(--rose)">Motivation</div>
+          <div class="dim-bar-wrap"><div class="dim-bar" style="width:75%;background:var(--rose)"></div></div>
+          <div class="dim-labels"><span>Mind</span><span>Heart</span></div>
+          <div class="dim-result" style="color:var(--rose)">Heart</div>
+        </div>
+        <div class="dim-card">
+          <div class="dim-phase" style="color:var(--ocean)">Environment</div>
+          <div class="dim-bar-wrap"><div class="dim-bar" style="width:68%;background:var(--ocean)"></div></div>
+          <div class="dim-labels"><span>Structured</span><span>Adaptive</span></div>
+          <div class="dim-result" style="color:var(--ocean)">Adaptive</div>
+        </div>
+        <div class="dim-card">
+          <div class="dim-phase" style="color:var(--lavender)">Contribution</div>
+          <div class="dim-bar-wrap"><div class="dim-bar" style="width:72%;background:var(--lavender)"></div></div>
+          <div class="dim-labels"><span>Specialist</span><span>Generalist</span></div>
+          <div class="dim-result" style="color:var(--lavender)">Generalist</div>
+        </div>
+      </div>
+
+      <!-- Superpower -->
+      <div class="section-label" style="color:var(--gold)">Interview Superpower</div>
+      <div class="superpower">
+        <p>Builds instant rapport. Group interviews, networking events, and multi-stakeholder meetings are YOUR stage. You make everyone feel heard, and that's a rare skill interviewers notice immediately.</p>
+      </div>
+
+      <!-- Strengths -->
+      <div class="section-label" style="color:var(--sage)">Strengths</div>
+      <div class="strengths">
+        <div class="strength-item"><span class="strength-check">+</span><div class="strength-text"><strong>Inclusive architect</strong> — diverse voices get heard</div></div>
+        <div class="strength-item"><span class="strength-check">+</span><div class="strength-text"><strong>Hidden-strength spotter</strong> — sees gifts others miss</div></div>
+        <div class="strength-item"><span class="strength-check">+</span><div class="strength-text"><strong>Energy catalyst</strong> — transforms networking into connection</div></div>
+        <div class="strength-item"><span class="strength-check">+</span><div class="strength-text"><strong>Multi-tracker</strong> — holds logistics + human element</div></div>
+      </div>
+
+      <!-- HIVE Prompt -->
+      <div class="section-label" style="color:var(--gold)">Your HIVE Story Prompt</div>
+      <div class="hive-prompt">
+        <p>Tell about a time you connected people or ideas that wouldn't have come together without you.</p>
+      </div>
+
+      <!-- Watch Out -->
+      <div class="section-label" style="color:var(--peach)">Watch Out</div>
+      <div class="watchout">
+        <div class="watchout-item"><span class="watchout-icon">!</span><div class="watchout-text">The host who forgets to eat — nurtures everyone except yourself</div></div>
+        <div class="watchout-item"><span class="watchout-icon">!</span><div class="watchout-text">Struggles with solo deep-focus work</div></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="section-label" style="color:var(--gold)">Try This Week</div>
+      <div class="actions">
+        <div class="action-item"><span class="action-num">1.</span><div class="action-text">Schedule 2 hours of solo deep work — protect it fiercely</div></div>
+        <div class="action-item"><span class="action-num">2.</span><div class="action-text">Write YOUR personal goal before the next event you organize</div></div>
+        <div class="action-item"><span class="action-num">3.</span><div class="action-text">Ask someone to help you — practice receiving</div></div>
+      </div>
+
+      <!-- Careers & Icons -->
+      <div class="section-label" style="color:var(--grey)">Career Paths</div>
+      <div class="careers">
+        <p>Event & program management, HR & organizational development, community engagement, partnership development</p>
+      </div>
+      <div class="icons">Michelle Obama, Samwise Gamgee, Dolly Parton, Oprah Winfrey</div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ═══ HIVE EXAMPLE ═══ -->
+  <div class="hive-example reveal">
+    <div class="section-label" style="color:var(--gold)">Example: How Bella Used HIVE</div>
+    <h3>Turning Your Prompt Into a Story</h3>
+    <p class="sub">Here's how I (Bella, your facilitator) answered my own Social Bunny prompt using the HIVE method.</p>
+
+    <div class="hive-grid">
+      <div class="hive-cell">
+        <span class="hive-letter">H</span>
+        <div class="hive-label">Habitat</div>
+        <div class="hive-hint">Set the scene</div>
+        <div class="hive-text">Last semester at UT Austin's Office of Career & Life Design, international grad students were attending career workshops but not connecting with each other or with employers afterward.</div>
+      </div>
+      <div class="hive-cell">
+        <span class="hive-letter">I</span>
+        <div class="hive-label">Initiative</div>
+        <div class="hive-hint">What was your role?</div>
+        <div class="hive-text">I proposed Coffee & Connections — a low-pressure, structured-but-warm format where students could practice networking in small groups before facing real employer events.</div>
+      </div>
+      <div class="hive-cell">
+        <span class="hive-letter">V</span>
+        <div class="hive-label">Venture</div>
+        <div class="hive-hint">What did you actually do?</div>
+        <div class="hive-text">I designed conversation prompts based on belonging research, matched students cross-culturally, and personally followed up with each attendee to connect them with relevant contacts.</div>
+      </div>
+      <div class="hive-cell">
+        <span class="hive-letter">E</span>
+        <div class="hive-label">Effect</div>
+        <div class="hive-hint">What changed? Numbers help.</div>
+        <div class="hive-text">Attendance grew 40% across sessions. Three students told me it was the first time they felt they belonged in a professional space in the U.S. Two got informational interviews from connections made at the event.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-dot"></div></div>
+
+  <!-- ═══ CTA ═══ -->
+  <div class="cta reveal">
+    <h3>Now it's <em style="font-family:'Playfair Display',serif;color:var(--gold)">your</em> turn.</h3>
+    <p>Take the quiz, get your animal, and write your own HIVE story.</p>
+    <a href="https://bit.ly/3OwmH0O" class="cta-link" target="_blank">Take the Quiz</a>
+  </div>
+</div>
+
+<div class="footer">
+  By <strong>Bella Kang</strong> — M.A. Advertising, Graduate Global Impact Consultant<br>
+  Office of Career & Life Design, UT Austin — IWG Workshop #2, Feb 24, 2026
+</div>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
