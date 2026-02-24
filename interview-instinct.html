@@ -1,676 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interview Instinct — Discover Your Natural Style</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>">
-  <meta name="theme-color" content="#C9A96E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --black: #000000;
-      --noir: #1D1D1F;
-      --charcoal: #424245;
-      --grey: #6E6E73;
-      --silver: #86868B;
-      --mist: #D2D2D7;
-      --cloud: #F5F5F7;
-      --snow: #FAFAFA;
-      --white: #FFFFFF;
-      --gold: #C9A96E;
-      --gold-light: #E8D5B0;
-      --gold-wash: #FAF6EF;
-      --gold-deep: #A68B4B;
-      --blush: #F2D4D7;
-      --blush-light: #FBF0F1;
-      --sage: #6B8F71;
-      --sage-light: #EFF3ED;
-      --ocean: #5B7FA5;
-      --ocean-light: #ECF1F6;
-      --berry: #A05B6B;
-      --berry-light: #F5EAED;
-      --lavender: #8B7BAE;
-      --lavender-light: #F0ECF5;
-      --serif: 'Playfair Display', Georgia, serif;
-      --sans: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
-      --hand: 'Caveat', cursive;
-      --radius: 16px;
-    }
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--sans);
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--charcoal);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media print {
-      body { background: white; font-size: 10pt; }
-      .no-print { display: none !important; }
-      .reveal { opacity: 1 !important; transform: none !important; }
-      .hero { min-height: auto; padding: 2rem 0; }
-      .animal-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-      section { page-break-inside: avoid; }
-      .page-break { page-break-before: always; }
-    }
-
-    .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
-
-    /* ═══ HERO ═══ */
-    .hero {
-      min-height: 50vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 5rem 2rem 4rem;
-      position: relative;
-      background: var(--white);
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: 600px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--mist), transparent);
-    }
-    .hero-bee {
-      font-size: 2.6rem;
-      animation: float 5s ease-in-out infinite;
-      filter: drop-shadow(0 4px 16px rgba(201,169,110,0.15));
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    .hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--noir);
-      margin-top: 0.6rem;
-    }
-    .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub {
-      font-size: 1rem; font-weight: 300;
-      color: var(--grey); margin-top: 0.5rem;
-      letter-spacing: 0.02em;
-    }
-    .hero-meta { margin-top: 1.8rem; }
-    .pill {
-      display: inline-block; padding: 0.4rem 1.2rem;
-      background: var(--cloud);
-      border: 1px solid var(--mist);
-      border-radius: 30px; font-size: 0.72rem;
-      font-weight: 500; color: var(--charcoal);
-      letter-spacing: 0.02em;
-    }
-    .hero-date {
-      margin-top: 0.5rem; font-size: 0.78rem;
-      color: var(--silver); letter-spacing: 0.01em;
-    }
-
-    /* ═══ SHARED ═══ */
-    .divider {
-      display: flex; align-items: center; justify-content: center;
-      gap: 1rem; margin: 3rem auto; max-width: 300px;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--mist), transparent);
-    }
-    .divider-icon { font-size: 0.65rem; color: var(--gold); }
-
-    .quote { text-align: center; padding: 1.5rem 2.5rem; max-width: 520px; margin: 0 auto; }
-    .quote blockquote {
-      font-family: var(--serif); font-style: italic;
-      font-size: 1rem; line-height: 1.7; color: var(--grey);
-    }
-    .quote cite {
-      display: block; margin-top: 0.6rem;
-      font-family: var(--sans); font-style: normal;
-      font-size: 0.6rem; font-weight: 600;
-      color: var(--silver); letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .name-field { text-align: center; margin: 2rem 0 3rem; }
-    .name-field label {
-      font-family: var(--serif); font-size: 0.9rem;
-      font-weight: 500; color: var(--charcoal);
-    }
-    .name-field input {
-      display: block; margin: 0.6rem auto 0; width: 320px; max-width: 90%;
-      border: none; border-bottom: 1px solid var(--mist);
-      background: transparent; font-family: var(--hand);
-      font-size: 1.4rem; text-align: center; padding: 0.3rem 0;
-      color: var(--noir); transition: border-color 0.4s;
-    }
-    .name-field input:focus { outline: none; border-color: var(--gold); }
-    .name-field input::placeholder { color: var(--mist); font-size: 1.1rem; }
-
-    .section-header { text-align: center; margin-bottom: 2rem; }
-    .section-header h2 {
-      font-family: var(--serif); font-size: 1.8rem;
-      font-weight: 400; letter-spacing: -0.02em; color: var(--noir);
-    }
-    .section-header h2 em { font-style: italic; color: var(--gold); }
-    .section-header p { font-size: 0.88rem; color: var(--grey); margin-top: 0.3rem; font-weight: 300; }
-
-    /* ═══ ANIMAL GRID ═══ */
-    .animal-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1rem; margin-bottom: 3rem;
-    }
-    @media (max-width: 720px) { .animal-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    .animal-card {
-      background: var(--white);
-      border: 1px solid var(--mist);
-      border-radius: var(--radius);
-      padding: 1.6rem 0.8rem 1.2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all .4s cubic-bezier(.16,1,.3,1);
-      position: relative;
-    }
-    .animal-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--gold-light);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-    }
-    .animal-card.selected {
-      border-color: var(--gold);
-      background: var(--gold-wash);
-      box-shadow: 0 8px 30px rgba(201,169,110,0.12);
-    }
-    .animal-card.selected::after {
-      content: '✦'; position: absolute; top: 10px; right: 12px;
-      font-size: 0.65rem; color: var(--gold);
-    }
-    .animal-emoji {
-      font-size: 2.2rem; display: block; margin-bottom: 0.6rem;
-      transition: transform .4s cubic-bezier(.16,1,.3,1);
-    }
-    .animal-card:hover .animal-emoji { transform: scale(1.15); }
-    .animal-name {
-      font-family: var(--serif); font-weight: 600;
-      font-size: 0.85rem; color: var(--noir);
-    }
-    .animal-power {
-      font-size: 0.6rem; font-weight: 600; color: var(--gold);
-      letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px;
-    }
-    .animal-prompt {
-      font-size: 0.7rem; font-style: italic; color: var(--grey);
-      line-height: 1.45; margin-top: 0.5rem;
-    }
-
-    /* ═══ MY SELECTION ═══ */
-    .my-selection {
-      background: var(--snow);
-      border: 1px solid var(--mist);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      margin-bottom: 3rem;
-    }
-    .my-selection h3 {
-      font-family: var(--serif); font-size: 1rem; font-weight: 600;
-      color: var(--noir); margin-bottom: 1.2rem;
-    }
-    .sel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-    @media (max-width: 540px) { .sel-grid { grid-template-columns: 1fr; } }
-    .sel-grid label {
-      font-size: 0.6rem; font-weight: 600; color: var(--silver);
-      letter-spacing: 0.1em; text-transform: uppercase;
-      display: block; margin-bottom: 4px;
-    }
-    .sel-grid input {
-      width: 100%; border: none;
-      border-bottom: 1px dashed var(--mist);
-      background: transparent; font-family: var(--hand);
-      font-size: 1.2rem; padding: 0.25rem 0; color: var(--noir);
-    }
-    .sel-grid input:focus { outline: none; border-style: solid; border-color: var(--gold); }
-
-    /* ═══ HIVE ═══ */
-    .hive-intro { text-align: center; margin-bottom: 2rem; }
-    .hive-hexagons {
-      display: flex; justify-content: center; gap: 6px;
-      margin: 1rem 0 0.6rem;
-    }
-    .hex {
-      width: 44px; height: 44px;
-      background: var(--noir);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--serif); font-weight: 700;
-      font-size: 1rem; color: var(--white);
-      transition: all 0.3s;
-    }
-    .hex:hover { background: var(--gold); transform: scale(1.08); }
-    .hive-sub { font-size: 0.82rem; color: var(--grey); font-weight: 300; }
-
-    .hive-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1rem; margin-bottom: 3rem;
-    }
-    @media (max-width: 540px) { .hive-grid { grid-template-columns: 1fr; } }
-    .hive-cell {
-      background: var(--white);
-      border: 1px solid var(--mist);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color .3s, box-shadow .3s;
-    }
-    .hive-cell:focus-within {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px var(--gold-wash);
-    }
-    .hive-letter {
-      font-family: var(--serif); font-weight: 700;
-      font-size: 1.6rem; color: var(--gold);
-      line-height: 1; float: left; margin-right: 0.5rem; margin-top: -2px;
-    }
-    .hive-label { font-family: var(--serif); font-weight: 600; font-size: 0.92rem; color: var(--noir); }
-    .hive-hint { font-size: 0.75rem; color: var(--grey); margin-bottom: 0.6rem; font-weight: 300; clear: both; }
-    .hive-cell textarea {
-      width: 100%; border: none;
-      background: var(--cloud);
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
-      font-family: var(--hand); font-size: 1.15rem;
-      line-height: 1.5; min-height: 72px; resize: vertical;
-      color: var(--noir); transition: background .3s;
-    }
-    .hive-cell textarea:focus { outline: none; background: var(--gold-wash); }
-    .hive-cell textarea::placeholder { color: var(--mist); }
-
-    /* ═══ PRACTICE ═══ */
-    .practice-box {
-      background: var(--noir);
-      border-radius: 24px;
-      padding: 3rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .practice-box::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at 30% 30%, rgba(201,169,110,0.08) 0%, transparent 50%);
-      pointer-events: none;
-    }
-    .practice-box h3 {
-      font-family: var(--serif); font-size: 1.2rem; font-weight: 500;
-      color: var(--white); margin-bottom: 0.5rem; position: relative;
-    }
-    .practice-box p {
-      font-size: 0.88rem; color: var(--silver);
-      line-height: 1.6; position: relative;
-    }
-    .timer-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      margin-top: 1.2rem; padding: 0.7rem 2rem;
-      background: var(--gold); color: var(--white); border: none;
-      border-radius: 30px; font-family: var(--sans);
-      font-size: 0.82rem; font-weight: 600; cursor: pointer;
-      transition: all .3s; position: relative;
-      letter-spacing: 0.02em;
-    }
-    .timer-btn:hover {
-      background: var(--gold-deep);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(201,169,110,0.3);
-    }
-    .timer-btn.running { background: var(--berry); }
-    .timer-btn.running:hover { background: #8A4A58; }
-    .timer-display {
-      font-family: var(--serif); font-size: 3.5rem; font-weight: 700;
-      color: var(--gold); margin-top: 0.6rem; position: relative;
-    }
-    .timer-display.warning { color: var(--berry); animation: pulse .5s ease-in-out infinite alternate; }
-    @keyframes pulse { from { opacity: 1; } to { opacity: 0.5; } }
-
-    .feedback-box {
-      border: 1px solid var(--mist);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      background: var(--white);
-      margin-bottom: 3rem;
-    }
-    .feedback-box label { font-family: var(--serif); font-size: 0.88rem; font-weight: 500; color: var(--charcoal); }
-    .feedback-box textarea {
-      width: 100%; border: none; background: transparent;
-      font-family: var(--hand); font-size: 1.15rem;
-      min-height: 50px; resize: vertical; margin-top: 0.5rem;
-      color: var(--noir); line-height: 1.5;
-    }
-    .feedback-box textarea:focus { outline: none; }
-    .feedback-box textarea::placeholder { color: var(--mist); }
-
-    /* ═══ THINKING TOOLKIT ═══ */
-    .toolkit-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2.5rem; }
-    @media (max-width: 540px) { .toolkit-steps { grid-template-columns: 1fr; } }
-    .toolkit-step {
-      background: var(--white); border: 1px solid var(--mist);
-      border-radius: var(--radius); padding: 1.6rem 1.2rem; text-align: center;
-      transition: all .3s;
-    }
-    .toolkit-step:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.05); }
-    .toolkit-step .step-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .toolkit-step h4 { font-family: var(--serif); font-size: 0.92rem; font-weight: 600; color: var(--noir); }
-    .toolkit-step p { font-size: 0.78rem; color: var(--grey); font-weight: 300; margin-top: 0.3rem; line-height: 1.5; }
-
-    .exercise {
-      margin-bottom: 1.5rem; border-radius: var(--radius); overflow: hidden;
-      background: var(--white); border: 1px solid var(--mist);
-      transition: border-color .3s;
-    }
-    .exercise:focus-within { border-color: var(--gold-light); }
-    .exercise-header { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-    .exercise.ask .exercise-header { background: var(--ocean-light); }
-    .exercise.structure .exercise-header { background: var(--sage-light); }
-    .exercise.refine .exercise-header { background: var(--berry-light); }
-    .exercise-header h3 { font-family: var(--serif); font-size: 0.88rem; font-weight: 600; color: var(--noir); }
-    .exercise-body { padding: 1.5rem; }
-    .exercise-context {
-      font-size: 0.78rem; color: var(--grey); line-height: 1.65;
-      margin-bottom: 1rem; font-weight: 300;
-    }
-    .exercise-prompt {
-      font-size: 0.88rem; color: var(--charcoal); font-style: italic;
-      margin-bottom: 1rem; padding: 0.8rem 1.2rem;
-      background: var(--cloud); border-radius: 10px;
-      border-left: 2px solid var(--gold-light); line-height: 1.65;
-    }
-    .mece-explainer {
-      background: var(--snow); border: 1px solid var(--mist);
-      border-radius: 12px; padding: 1.2rem 1.4rem;
-      margin-bottom: 1.2rem;
-    }
-    .mece-explainer h4 {
-      font-family: var(--serif); font-size: 0.85rem;
-      font-weight: 600; color: var(--noir); margin-bottom: 0.5rem;
-    }
-    .mece-explainer p {
-      font-size: 0.78rem; color: var(--grey); line-height: 1.6; font-weight: 300;
-    }
-    .mece-example {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
-      margin-top: 0.8rem;
-    }
-    @media (max-width: 540px) { .mece-example { grid-template-columns: 1fr; } }
-    .mece-example-box {
-      padding: 0.6rem 0.8rem; border-radius: 8px;
-      font-size: 0.72rem; line-height: 1.5;
-    }
-    .mece-bad { background: var(--berry-light); color: var(--berry); }
-    .mece-good { background: var(--sage-light); color: var(--sage); }
-    .mece-example-box strong { display: block; margin-bottom: 2px; }
-    .exercise textarea {
-      width: 100%; border: 1px solid var(--mist); border-radius: 10px;
-      padding: 0.8rem; font-family: var(--hand); font-size: 1.15rem;
-      line-height: 1.5; min-height: 88px; resize: vertical;
-      color: var(--noir); background: var(--snow); transition: all .3s;
-    }
-    .exercise textarea:focus {
-      outline: none; border-color: var(--gold);
-      background: var(--gold-wash);
-      box-shadow: 0 0 0 3px rgba(201,169,110,0.08);
-    }
-    .exercise textarea::placeholder { color: var(--mist); }
-
-    /* ═══ FOOTER ═══ */
-    .footer-quote { text-align: center; padding: 3rem 2rem 1.5rem; }
-    .footer-quote blockquote {
-      font-family: var(--serif); font-style: italic;
-      font-size: 1rem; color: var(--grey);
-      max-width: 480px; margin: 0 auto; line-height: 1.7;
-    }
-    .footer-quote cite {
-      display: block; font-family: var(--sans); font-style: normal;
-      font-size: 0.6rem; font-weight: 600; color: var(--silver);
-      margin-top: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
-    }
-    .footer-credits {
-      text-align: center; padding: 1.5rem 2rem 4rem;
-      font-size: 0.75rem; color: var(--silver); line-height: 1.8;
-    }
-    .footer-credits strong { color: var(--charcoal); font-weight: 600; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Instinct — Discover Your Interview Animal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8F3;--card:#FFFFFF;--esp:#3D2B1F;--text:#2C2C2C;--text-s:#8A7E72;--text-xs:#B0A698;
+  --border:#E8E0D4;--border-l:#F0EBE2;
+  --pink:#E8A0B0;--pink-l:#FDF0F3;--pink-d:#C07888;
+  --lav:#B8A0D0;--lav-l:#F3EEF8;--lav-d:#8A6DAE;
+  --sage:#7A9178;--sage-l:#E8F0E7;--sage-d:#5C7359;
+  --sky:#90BCD8;--sky-l:#EDF5FA;--sky-d:#5A8DAE;
+  --mint:#88C8B0;--mint-l:#ECF7F2;--mint-d:#5A9A80;
+  --peach:#E8B898;--peach-l:#FDF3EC;--peach-d:#C08060;
+  --gold:#D4B068;--gold-l:#FBF5E8;--gold-d:#A88840;
+  --rose:#D08888;--rose-l:#FAEEEE;
+  --white:#FFFFFF;
+  --sh:rgba(61,43,31,.04);--shm:rgba(61,43,31,.08);--shl:rgba(61,43,31,.14)
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--pink);color:var(--white)}
+.container{max-width:620px;margin:0 auto;padding:0 1.5rem}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+.scatter{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.scatter span{position:absolute;animation:drift 7s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(6deg)}}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sp{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1.02)}}
+@keyframes popIn{from{opacity:0;transform:scale(.85) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes mfl{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes barGrow{from{width:0}to{width:var(--bar-w)}}
+.hero{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2.5rem 1.5rem;position:relative}
+.hero-bee{font-size:3rem;animation:mfl 3s ease-in-out infinite;filter:drop-shadow(0 4px 12px rgba(200,146,42,.12));margin-bottom:.3rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5.5vw,3.2rem);color:var(--esp);line-height:1.15;margin:.3rem 0}
+.hero h1 em{font-style:italic;color:var(--sage-d)}
+.bubble{background:var(--card);border:1.5px solid var(--border-l);border-radius:20px;padding:.6rem 1rem;box-shadow:0 2px 12px var(--sh);font-size:.86rem;color:var(--text);line-height:1.55;display:inline-block;max-width:400px;position:relative}
+.bubble::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--card)}
+.bubble .hi{font-weight:700;color:var(--sage-d)}.bubble .pk{color:var(--pink-d);font-weight:600}
+.hero-sub{font-size:.9rem;color:var(--text-s);max-width:440px;margin:.3rem auto;font-weight:300;line-height:1.7}
+.hero-tags{display:flex;gap:.3rem;justify-content:center;flex-wrap:wrap;margin:.6rem 0 1.2rem}
+.htag{padding:.25rem .65rem;border-radius:100px;font-size:.68rem;font-weight:600;letter-spacing:.01em}
+.cta{background:var(--esp);color:var(--white);border:none;padding:.85rem 2.2rem;border-radius:100px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .3s cubic-bezier(.22,1,.36,1);box-shadow:0 4px 20px var(--shm)}
+.cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 6px 24px var(--shl)}
+.cta:active{transform:translateY(0) scale(.99)}
+.sci-note{font-size:.72rem;color:var(--text-xs);max-width:420px;margin:.8rem auto 0;line-height:1.55;font-style:italic}
+.hero-foot{margin-top:1.5rem;font-size:.65rem;color:var(--text-xs)}.hero-foot a{color:var(--text-xs);text-decoration:underline;text-underline-offset:2px}
+.sec{display:none;padding:1.5rem 0 3rem;animation:fu .4s ease}.sec.active{display:block}
+.demo-card{background:var(--card);border-radius:18px;padding:1.3rem;box-shadow:0 2px 12px var(--sh);border:1px solid var(--border-l);margin-bottom:1rem}
+.demo-field{margin-bottom:.8rem}.demo-field:last-child{margin:0}
+.demo-label{font-size:.78rem;font-weight:600;color:var(--esp);margin-bottom:.3rem;display:block}
+.demo-sel{width:100%;padding:.55rem .8rem;border:1.5px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:.85rem;color:var(--text);background:var(--white);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%238A7E72' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center;transition:border-color .2s}.demo-sel:focus{outline:none;border-color:var(--pink)}
+.prog{position:sticky;top:0;z-index:100;background:rgba(251,248,243,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:.5rem 1.5rem .4rem;display:none;border-bottom:1px solid var(--border-l)}.prog.vis{display:block}
+.prog-bar{height:5px;background:var(--border-l);border-radius:3px;overflow:hidden;max-width:500px;margin:0 auto}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--lav),var(--sage));border-radius:3px;transition:width .5s cubic-bezier(.22,1,.36,1)}
+.phase-label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:center;margin-top:.25rem;transition:color .3s}
+.q-page{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:1rem 0}
+.q-counter{display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;font-size:.9rem;font-weight:800;color:var(--white);margin-bottom:.8rem;box-shadow:0 3px 14px rgba(0,0,0,.1);position:relative;transition:background .3s}
+.q-counter .qa{position:absolute;top:-12px;right:-12px;font-size:1.3rem}
+.q-phase{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;transition:color .3s}
+.q-text{font-family:'DM Serif Display',serif;font-size:clamp(1.05rem,3.2vw,1.25rem);color:var(--esp);line-height:1.45;margin-bottom:1.4rem;max-width:450px;padding:0 .8rem}
+.q-opts{display:flex;flex-direction:column;gap:.5rem;width:100%;max-width:450px;padding:0 .8rem}
+.q-opt{padding:.85rem 1.1rem;border-radius:50px;font-size:.86rem;font-weight:500;cursor:pointer;transition:all .25s cubic-bezier(.22,1,.36,1);text-align:center;line-height:1.45;border:2px solid transparent;user-select:none;-webkit-user-select:none}
+.q-opt.ao{background:var(--pink-l);color:var(--pink-d)}
+.q-opt.ao:hover,.q-opt.ao.sel{background:var(--pink);color:var(--white);transform:scale(1.02);box-shadow:0 4px 16px rgba(232,160,176,.25)}
+.q-opt.bo{background:var(--sage-l);color:var(--sage-d)}
+.q-opt.bo:hover,.q-opt.bo.sel{background:var(--sage);color:var(--white);transform:scale(1.02);box-shadow:0 4px 16px rgba(122,145,120,.25)}
+.q-opt.sel{animation:sp .3s ease}
+.q-nav{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:450px;margin-top:1.2rem;padding:0 .8rem}
+.btn{font-family:'Outfit',sans-serif;font-weight:600;font-size:.8rem;padding:.5rem 1.2rem;border-radius:100px;cursor:pointer;transition:all .2s;border:none}
+.btn-ghost{background:transparent;color:var(--text-s)}.btn-ghost:hover{color:var(--esp)}
+.btn-pri{background:var(--esp);color:var(--white)}.btn-pri:hover{background:#4A3628;transform:translateY(-1px)}.btn-pri:disabled{opacity:.2;cursor:not-allowed;transform:none}
+.qm{position:fixed;bottom:.8rem;right:.8rem;z-index:50;display:flex;flex-direction:column;align-items:center;gap:.2rem}
+.qmb{background:var(--card);border:1px solid var(--border-l);border-radius:14px;padding:.35rem .6rem;box-shadow:0 2px 6px var(--sh);font-size:.7rem;color:var(--text);max-width:150px;text-align:center;line-height:1.35;animation:popIn .4s ease}
+.qm-bee{font-size:1.5rem;animation:mfl 3s ease-in-out infinite}
+.rc{border-radius:24px;padding:1.8rem 1.3rem;margin-bottom:.8rem;position:relative;overflow:hidden;box-shadow:0 4px 24px var(--shm);text-align:center}
+.rc .scatter span{opacity:.1;font-size:16px}
+.superpower{background:rgba(255,255,255,.65);border-radius:14px;padding:.8rem 1rem;margin:.6rem 0;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.superpower h4{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.superpower p{font-size:.85rem;line-height:1.55}
+.story-prompt{background:var(--white);border-radius:14px;padding:.8rem 1rem;margin:.5rem 0;box-shadow:0 1px 6px var(--sh);text-align:left}
+.story-prompt h4{font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.25rem;color:var(--text-xs)}
+.story-prompt p{font-size:.88rem;line-height:1.55;font-style:italic;color:var(--esp)}
+.fortune{background:linear-gradient(135deg,var(--gold-l),var(--peach-l));border-radius:12px;padding:.6rem .8rem;margin:.4rem 0;font-size:.82rem;line-height:1.5;text-align:center}
+.dim-card{background:var(--card);border-radius:14px;padding:.85rem 1rem;box-shadow:0 1px 8px var(--sh);margin-bottom:.45rem;border:1px solid var(--border-l)}
+.dim-name{font-size:.73rem;font-weight:700;color:var(--esp);margin-bottom:.12rem}
+.dim-labels{display:flex;justify-content:space-between;font-size:.65rem;font-weight:600;color:var(--text-xs)}
+.dim-bar-track{height:8px;background:var(--border-l);border-radius:4px;position:relative;overflow:hidden;margin:.35rem 0}
+.dim-bar-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.dim-sci{font-size:.64rem;color:var(--text-xs);font-style:italic;margin-top:.1rem;line-height:1.4}
+.pcard{background:var(--card);border-radius:16px;padding:1.2rem;box-shadow:0 2px 12px var(--sh);border:1px solid var(--border-l);margin-bottom:.55rem}
+.pcard h3{font-family:'DM Serif Display',serif;font-size:.92rem;color:var(--esp);margin-bottom:.4rem}
+.si{padding:.4rem 0;border-bottom:1px solid var(--border-l);font-size:.82rem;line-height:1.55}.si:last-child{border:none}.si strong{color:var(--esp)}
+.bi{background:var(--peach-l);border-radius:10px;padding:.5rem .8rem;margin-bottom:.3rem;font-size:.79rem;line-height:1.5}.bi:last-child{margin:0}
+.ai{display:flex;gap:.4rem;padding:.4rem 0;border-bottom:1px solid var(--border-l);font-size:.79rem;line-height:1.5}.ai:last-child{border:none}
+.ai-n{width:18px;height:18px;border-radius:50%;background:var(--sage-l);color:var(--sage-d);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.ref-list{display:flex;flex-wrap:wrap;gap:.25rem}
+.ref-tag{padding:.2rem .5rem;border-radius:100px;font-size:.68rem;font-weight:500;background:var(--bg);color:var(--text-s)}
+.bcg-box{background:linear-gradient(135deg,var(--sage-l),var(--mint-l));border-radius:14px;padding:.8rem 1rem;margin:.6rem 0;text-align:center}
+.bcg-box h4{font-size:.73rem;font-weight:700;margin-bottom:.25rem}.bcg-box p{font-size:.78rem;color:var(--text-s)}
+.rbox{background:var(--bg);border-radius:12px;padding:1rem;margin-top:.6rem}
+.rbox h3{font-family:'DM Serif Display',serif;font-size:.85rem;margin-bottom:.25rem}
+.rbox p{font-size:.73rem;color:var(--text-s);margin-bottom:.35rem}
+.rbox textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:.5rem;font-family:'Outfit',sans-serif;font-size:.8rem;resize:vertical;min-height:55px;background:var(--white)}.rbox textarea:focus{outline:none;border-color:var(--pink)}
+.res-acts{display:flex;gap:.35rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem;padding-bottom:2rem}
+.abtn{font-family:'Outfit',sans-serif;font-weight:600;font-size:.73rem;padding:.45rem .9rem;border-radius:100px;cursor:pointer;border:none;transition:all .2s}
+.a1{background:var(--esp);color:var(--white)}.a1:hover{background:#4A3628}
+.a2{background:transparent;border:1px solid var(--border);color:var(--text-s)}.a2:hover{border-color:var(--esp);color:var(--esp)}
+.adm-tog{position:fixed;bottom:.8rem;left:.8rem;background:var(--esp);color:var(--white);border:none;width:26px;height:26px;border-radius:50%;font-size:.6rem;cursor:pointer;z-index:300;opacity:.3;transition:opacity .2s}.adm-tog:hover{opacity:1}
+.adm{display:none;position:fixed;bottom:2.5rem;left:.8rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.9rem;width:230px;box-shadow:0 6px 20px var(--shm);z-index:300;max-height:50vh;overflow-y:auto}.adm.vis{display:block}
+.adm h4{font-family:'DM Serif Display',serif;font-size:.78rem;margin-bottom:.3rem}
+.adm-r{display:flex;justify-content:space-between;padding:.18rem 0;font-size:.68rem;border-bottom:1px solid var(--border-l)}.adm-r:last-child{border:none}.adm-r .l{color:var(--text-s)}.adm-r .v{font-weight:600}
+.adm-s{font-size:.58rem;font-weight:700;color:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;margin:.3rem 0 .1rem}
+.adm-b{width:100%;margin-top:.3rem;font-family:'Outfit',sans-serif;font-weight:600;font-size:.66rem;padding:.3rem;border-radius:5px;cursor:pointer;border:none}.adm-b.g{background:var(--sage);color:var(--white)}.adm-b.r{background:var(--rose);color:var(--white)}
+.timer-wrap{position:fixed;top:.6rem;right:.8rem;z-index:101;display:none;animation:popIn .4s ease}
+.timer-wrap.vis{display:flex}
+.timer-pill{display:flex;align-items:center;gap:.3rem;background:var(--card);border:1px solid var(--border-l);border-radius:100px;padding:.3rem .7rem .3rem .45rem;box-shadow:0 2px 10px var(--sh);font-size:.72rem;font-weight:600;color:var(--text-s)}
+.timer-bee{font-size:.9rem;animation:mfl 2.5s ease-in-out infinite}
+.timer-val{font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:32px}
+.streak-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;pointer-events:none;animation:streakAnim .8s ease forwards}
+@keyframes streakAnim{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}60%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(.9)}}
+.streak-badge{background:var(--card);border-radius:16px;padding:.5rem .9rem;box-shadow:0 4px 20px var(--shm);font-size:.85rem;font-weight:700;color:var(--esp);display:flex;align-items:center;gap:.3rem;white-space:nowrap}
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:250;overflow:hidden}
+.confetti-piece{position:absolute;top:-10px;width:8px;height:8px;border-radius:2px;animation:confettiFall var(--dur) linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}80%{opacity:1}100%{transform:translateY(100vh) rotate(720deg) scale(.3);opacity:0}}
+.phase-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;animation:phaseIn .6s ease forwards;padding:2rem}
+@keyframes phaseIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.phase-screen.out{animation:phaseOut .4s ease forwards}
+@keyframes phaseOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.05)}}
+.phase-emoji{font-size:3.5rem;margin-bottom:.5rem;animation:mfl 2s ease-in-out infinite}
+.phase-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--esp);margin-bottom:.2rem}
+.phase-sub{font-size:.85rem;color:var(--text-s);max-width:320px;line-height:1.55}
+.phase-dots{display:flex;gap:.4rem;margin-top:.8rem}
+.phase-dot{width:8px;height:8px;border-radius:50%;transition:all .3s}
+.sparkle{position:absolute;pointer-events:none;font-size:14px;animation:sparkleUp .7s ease forwards;z-index:10}
+@keyframes sparkleUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-30px) scale(.4)}}
+.reveal-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease}
+.reveal-card{background:var(--card);border-radius:24px;padding:2rem;text-align:center;box-shadow:0 8px 40px var(--shl);animation:revealBounce .6s cubic-bezier(.22,1,.36,1) .2s both;max-width:300px}
+@keyframes revealBounce{0%{opacity:0;transform:scale(.7) translateY(20px)}60%{transform:scale(1.03) translateY(-4px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.reveal-emoji{font-size:4.5rem;display:block;margin-bottom:.3rem}
+.reveal-name{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--esp)}
+.reveal-sub{font-size:.82rem;color:var(--text-s);margin-top:.15rem}
+@media(max-width:600px){.qmb{max-width:120px;font-size:.66rem}.adm{width:calc(100% - 1.6rem)}.rc{padding:1.3rem 1rem}.timer-wrap{top:auto;bottom:3.2rem;right:.8rem}}
+</style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-bee">🐝</div>
-    <h1>Interview <em>Instinct</em></h1>
-    <p class="hero-sub">Discover your natural interview style.</p>
-    <div class="hero-meta">
-      <span class="pill">International Job Search Working Group · Workshop #2</span>
-      <p class="hero-date">February 24, 2026 · 3:00–4:00 PM · FAC 2.134</p>
-    </div>
-  </header>
-
-  <div class="quote reveal">
-    <blockquote>"Every individual matters. Every individual has a role to play. Every individual makes a difference."</blockquote>
-    <cite>Jane Goodall</cite>
-  </div>
-
-  <div class="container">
-    <div class="name-field reveal">
-      <label for="userName">Your Beautiful Name</label>
-      <input type="text" id="userName" placeholder="write here...">
-    </div>
-    <div class="divider"><span class="divider-icon">✦</span></div>
-
-    <section class="reveal">
-      <div class="section-header">
-        <h2>Find Your <em>Instinct</em></h2>
-        <p>Everyone interviews differently. Tap the animal that matches how you naturally show up.</p>
-      </div>
-      <div class="animal-grid" id="animalGrid">
-        <div class="animal-card" data-power="Creates trust" data-prompt="A time you made someone feel supported" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🐑</span>
-          <div class="animal-name">Baby Lamb</div>
-          <div class="animal-power">Creates Trust</div>
-          <div class="animal-prompt">A time you made someone feel supported</div>
-        </div>
-        <div class="animal-card" data-power="Reads the room" data-prompt="When you adapted for different audiences" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🐱</span>
-          <div class="animal-name">Wise Cat</div>
-          <div class="animal-power">Reads the Room</div>
-          <div class="animal-prompt">When you adapted for different audiences</div>
-        </div>
-        <div class="animal-card" data-power="Real-world solver" data-prompt="When you solved a problem in chaos" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🐕</span>
-          <div class="animal-name">Loyal Pup</div>
-          <div class="animal-power">Real-World Solver</div>
-          <div class="animal-prompt">When you solved a problem in chaos</div>
-        </div>
-        <div class="animal-card" data-power="Builds rapport" data-prompt="When you connected people or ideas" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🐰</span>
-          <div class="animal-name">Social Bunny</div>
-          <div class="animal-power">Builds Rapport</div>
-          <div class="animal-prompt">When you connected people or ideas</div>
-        </div>
-        <div class="animal-card" data-power="Airtight prep" data-prompt="Walk through analyzing a complex problem" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🦉</span>
-          <div class="animal-name">Night Owl</div>
-          <div class="animal-power">Airtight Prep</div>
-          <div class="animal-prompt">Walk through analyzing a complex problem</div>
-        </div>
-        <div class="animal-card" data-power="Fresh angles" data-prompt="When you found an unexpected solution" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🦊</span>
-          <div class="animal-name">Clever Fox</div>
-          <div class="animal-power">Fresh Angles</div>
-          <div class="animal-prompt">When you found an unexpected solution</div>
-        </div>
-        <div class="animal-card" data-power="Under pressure" data-prompt="A tough call you made under pressure" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🐻</span>
-          <div class="animal-name">Bold Bear</div>
-          <div class="animal-power">Under Pressure</div>
-          <div class="animal-prompt">A tough call you made under pressure</div>
-        </div>
-        <div class="animal-card" data-power="Big-picture" data-prompt="How global perspective changed an outcome" onclick="selectAnimal(this)">
-          <span class="animal-emoji">🦋</span>
-          <div class="animal-name">Free Butterfly</div>
-          <div class="animal-power">Big-Picture</div>
-          <div class="animal-prompt">How global perspective changed an outcome</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="my-selection reveal">
-      <h3>🐝 My Instinct</h3>
-      <div class="sel-grid">
-        <div><label>My Animal</label><input type="text" id="selAnimal" readonly placeholder="tap one above"></div>
-        <div><label>My Superpower</label><input type="text" id="selPower" readonly placeholder="—"></div>
-        <div><label>My Story Prompt</label><input type="text" id="selPrompt" readonly placeholder="—"></div>
-      </div>
-    </div>
-
-    <div class="divider"><span class="divider-icon">✦</span></div>
-
-    <section class="reveal page-break">
-      <div class="hive-intro">
-        <div class="section-header" style="margin-bottom:0.4rem;">
-          <h2>Build Your <em>HIVE</em></h2>
-        </div>
-        <div class="hive-hexagons"><div class="hex">H</div><div class="hex">I</div><div class="hex">V</div><div class="hex">E</div></div>
-        <p class="hive-sub">Every bee in a hive has a role. In an interview, you do too.</p>
-      </div>
-      <div class="hive-grid">
-        <div class="hive-cell"><span class="hive-letter">H</span><div class="hive-label">Habitat</div><div class="hive-hint">Set the scene. Where, when, what was happening?</div><textarea placeholder="The setting was..."></textarea></div>
-        <div class="hive-cell"><span class="hive-letter">I</span><div class="hive-label">Initiative</div><div class="hive-hint">What was your role? Why did you step up?</div><textarea placeholder="I took the lead because..."></textarea></div>
-        <div class="hive-cell"><span class="hive-letter">V</span><div class="hive-label">Venture</div><div class="hive-hint">What did you do? Be specific about your choices.</div><textarea placeholder="The specific steps I took were..."></textarea></div>
-        <div class="hive-cell"><span class="hive-letter">E</span><div class="hive-label">Effect</div><div class="hive-hint">What happened? Numbers help.</div><textarea placeholder="The result was..."></textarea></div>
-      </div>
-    </section>
-
-    <div class="practice-box reveal">
-      <h3>60-Second Practice</h3>
-      <p>Partner up. Tell your HIVE story in 60 seconds.<br>Your partner gives one strength, one suggestion. Then switch!</p>
-      <button class="timer-btn no-print" id="timerBtn" onclick="toggleTimer()">&#9654; &nbsp;Start 60s Timer</button>
-      <div class="timer-display" id="timerDisplay" style="display:none;">60</div>
-    </div>
-    <div class="feedback-box reveal">
-      <label>Partner feedback</label>
-      <textarea placeholder="What they said about my story..."></textarea>
-    </div>
-
-    <div class="divider"><span class="divider-icon">✦</span></div>
-
-    <section class="reveal page-break">
-      <div class="section-header">
-        <h2>Sharpen Your <em>Thinking</em></h2>
-        <p>Top firms like McKinsey now test how you think through problems — not what you already know.<br>Here are three tools they look for. Let's practice them right now.</p>
-      </div>
-      <div class="toolkit-steps">
-        <div class="toolkit-step"><div class="step-icon">🔍</div><h4>Ask</h4><p>A vague question gets a vague answer. Sharpen the question first.</p></div>
-        <div class="toolkit-step"><div class="step-icon">🧩</div><h4>Structure</h4><p>Break a big messy problem into clean pieces. Think out loud, not in circles.</p></div>
-        <div class="toolkit-step"><div class="step-icon">✏️</div><h4>Refine</h4><p>Your first answer is a draft. Look for what's missing and make it better.</p></div>
-      </div>
-
-      <div class="exercise ask">
-        <div class="exercise-header"><h3>🔍 Ask — Make this question sharper</h3></div>
-        <div class="exercise-body">
-          <div class="exercise-context">Notice the difference: "I can't do this" shuts the door. "How can I learn to do this?" opens it. The same applies to interview questions — a sharper question gets you a sharper answer.</div>
-          <div class="exercise-prompt">"I'm not good at interviews. How do I fix that?"</div>
-          <textarea placeholder="Rewrite it so the answer becomes clearer..."></textarea>
-        </div>
-      </div>
-
-      <div class="exercise structure">
-        <div class="exercise-header"><h3>🧩 Structure — Sort this into clean buckets</h3></div>
-        <div class="exercise-body">
-          <div class="mece-explainer">
-            <h4>What are "clean buckets"?</h4>
-            <p>In consulting, they call this MECE (say "me-see"). It just means: your categories shouldn't overlap, and together they should cover everything. That's it.</p>
-            <div class="mece-example">
-              <div class="mece-example-box mece-bad"><strong>Overlapping (not MECE)</strong>"Skills" and "Hard skills" — one lives inside the other.</div>
-              <div class="mece-example-box mece-good"><strong>Clean (MECE)</strong>"Mindset," "Preparation," "Communication" — each is separate, together they cover a lot.</div>
-            </div>
-          </div>
-          <div class="exercise-prompt">"What holds people back from showing their best selves in interviews?"</div>
-          <textarea placeholder="Bucket 1:&#10;Bucket 2:&#10;Bucket 3:"></textarea>
-        </div>
-      </div>
-
-      <div class="exercise refine">
-        <div class="exercise-header"><h3>✏️ Refine — What's missing from this advice?</h3></div>
-        <div class="exercise-body">
-          <div class="exercise-context">This advice sounds safe — but it's all about avoiding mistakes instead of actually growing. Read it and think: what's missing?</div>
-          <div class="exercise-prompt">"To do well in interviews, memorize your answers, avoid talking about weaknesses, and stick to what you already know."</div>
-          <textarea placeholder="What's missing here..."></textarea>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-  <div class="footer-quote reveal">
-    <blockquote>"Only when our clever brain and our human heart work together in harmony can we achieve our full potential."</blockquote>
-    <cite>Jane Goodall</cite>
-  </div>
-  <div class="footer-credits">
-    By <strong>Bella Kang</strong> · M.A. Advertising · Graduate Global Impact Consultant<br>
-    Office of Career &amp; Life Design, UT Austin · February 2026
-  </div>
-
-  <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    function selectAnimal(card) {
-      document.querySelectorAll('.animal-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      document.getElementById('selAnimal').value = card.querySelector('.animal-name').textContent;
-      document.getElementById('selPower').value = card.dataset.power;
-      document.getElementById('selPrompt').value = card.dataset.prompt;
-    }
-
-    let timerInterval = null, timeLeft = 60;
-    function toggleTimer() {
-      const btn = document.getElementById('timerBtn');
-      const disp = document.getElementById('timerDisplay');
-      if (timerInterval) {
-        clearInterval(timerInterval); timerInterval = null;
-        btn.innerHTML = '&#9654; &nbsp;Start 60s Timer'; btn.classList.remove('running');
-        disp.style.display = 'none'; disp.classList.remove('warning'); timeLeft = 60;
-        return;
-      }
-      timeLeft = 60; disp.style.display = 'block'; disp.textContent = '60';
-      disp.classList.remove('warning');
-      btn.innerHTML = '&#9632; &nbsp;Stop'; btn.classList.add('running');
-      timerInterval = setInterval(() => {
-        timeLeft--; disp.textContent = timeLeft;
-        if (timeLeft <= 10) disp.classList.add('warning');
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval); timerInterval = null;
-          disp.textContent = "Time!";
-          btn.innerHTML = '&#8634; &nbsp;Reset'; btn.classList.remove('running');
-        }
-      }, 1000);
-    }
-  </script>
+<section class="hero" id="hero">
+<div class="scatter"><span style="top:8%;left:6%;font-size:22px">🐑</span><span style="top:14%;right:10%;font-size:18px;animation-delay:1s">🦊</span><span style="top:42%;left:4%;font-size:20px;animation-delay:2s">🐻</span><span style="top:68%;right:6%;font-size:18px;animation-delay:3s">🦋</span><span style="bottom:18%;left:10%;font-size:16px;animation-delay:1.5s">🦉</span><span style="bottom:22%;right:12%;font-size:20px;animation-delay:2.5s">🐱</span></div>
+<div class="hero-bee">🐝</div>
+<div class="bubble" style="margin:.3rem auto .6rem">Hi! Before we prep for AI interviews,<br>let's discover your natural instinct first!<br>I'm <span class="pk">Bella Kang</span> from <span class="hi">OCLD</span> 🍏</div>
+<h1><em>Interview Instinct</em></h1>
+<p class="hero-sub">Every animal has a natural instinct. What's yours? 24 research-backed scenarios across 3 behavioral dimensions to uncover how you think, connect, and contribute under pressure.</p>
+<div style="font-size:1.5rem;letter-spacing:.2rem;margin:.3rem 0">🐑🐱🐕🐰🦉🦊🐻🦋</div>
+<div class="hero-tags">
+<span class="htag" style="background:var(--pink-l);color:var(--pink-d)">24 scenarios</span>
+<span class="htag" style="background:var(--lav-l);color:var(--lav-d)">~5 min</span>
+<span class="htag" style="background:var(--sage-l);color:var(--sage-d)">3 dimensions</span>
+<span class="htag" style="background:var(--sky-l);color:var(--sky-d)">8 instinct types</span>
+</div>
+<button class="cta" onclick="goStart()">Discover My Instinct →</button>
+<p class="sci-note">Grounded in Self-Determination Theory (Deci & Ryan, 2000), Regulatory Focus Theory (Higgins, 1997), and Cognitive Style research (Kirton, 1976). Your instinct isn't a weakness — it's your competitive edge.</p>
+<p class="hero-foot">by <a href="https://bellakang017.github.io" target="_blank">Bella Kang</a> · UT Austin OCLD · IWG Workshop #2 · Feb 24, 2026</p>
+</section>
+<section class="sec" id="dSec"><div class="container">
+<div style="text-align:center;margin-bottom:.8rem"><div class="hero-bee" style="font-size:2rem">🐝</div><div class="bubble" style="margin-top:.3rem;font-size:.82rem">Quick intro! Totally anonymous ✨</div></div>
+<div class="demo-card">
+<div class="demo-field"><label class="demo-label">School</label><select class="demo-sel" id="dS" onchange="chkD()"><option value="" disabled selected>Select...</option><option>School of Architecture</option><option>McCombs School of Business</option><option>Moody College of Communication</option><option>College of Education</option><option>Cockrell School of Engineering</option><option>College of Fine Arts</option><option>Jackson School of Geosciences</option><option>School of Information</option><option>College of Liberal Arts</option><option>College of Natural Sciences</option><option>School of Nursing</option><option>College of Pharmacy</option><option>LBJ School of Public Affairs</option><option>School of Social Work</option><option>Intercollegial Program</option><option>Other</option></select></div>
+<div class="demo-field"><label class="demo-label">Degree Stage</label><select class="demo-sel" id="dD" onchange="chkD()"><option value="" disabled selected>Select...</option><option>Master's</option><option>Doctoral — Early</option><option>Doctoral — Mid</option><option>Doctoral — Late</option><option>Postdoctoral</option></select></div>
+</div>
+<div style="text-align:right"><button class="btn btn-pri" id="dN" disabled onclick="goQ()">Start Quiz →</button></div>
+</div></section>
+<div class="prog" id="prog"><div class="prog-bar"><div class="prog-fill" id="pF"></div></div><div class="phase-label" id="phL"></div></div>
+<div class="timer-wrap" id="timerWrap"><div class="timer-pill"><span class="timer-bee">🐝</span><span class="timer-val" id="timerVal">0:00</span></div></div>
+<section class="sec" id="qSec"><div class="container"><div class="q-page" id="qP"></div></div>
+<div class="qm" id="qM"><div class="qmb" id="qB"></div><div class="qm-bee">🐝</div></div></section>
+<section class="sec" id="rSec"><div class="container">
+<div style="text-align:center;margin-bottom:.3rem"><div style="font-size:2.5rem;animation:mfl 3s ease-in-out infinite">🐝</div><div class="bubble" style="margin-top:.3rem;font-size:.82rem">Your interview instinct is ready! 🎉</div></div>
+<div id="rC"></div><div id="rDims"></div><div id="rP"></div>
+<div class="rbox"><h3>✏️ Notes</h3><p>What resonated? What surprised you?</p><textarea id="notes" placeholder="Your reflections..."></textarea></div>
+<div class="res-acts"><button class="abtn a1" onclick="dlR()">📄 Download Profile</button><button class="abtn a2" onclick="restart()">↺ Retake</button></div>
+</div></section>
+<button class="adm-tog" onclick="togA()">📊</button>
+<div class="adm" id="adm"><h4>Dashboard</h4><div id="aB"></div><button class="adm-b g" onclick="exCSV()">Export CSV</button><button class="adm-b r" onclick="clr()">Clear All</button></div>
+<script>
+var PHASE_NAMES=["Phase 1 · What Drives You","Phase 2 · Where You Thrive","Phase 3 · How You Contribute"];
+var PHASE_COLORS=[{bg:"var(--pink)",c:"var(--pink-d)"},{bg:"var(--lav)",c:"var(--lav-d)"},{bg:"var(--sage)",c:"var(--sage-d)"}];
+var SCATTER_POOL=["🐾","⭐","💖","✨","🌸","☁️","💫","🌿","💝","🎀"];
+var QA="🐑🐱🐕🐰🦉🦊🐻🦋🐑🐱🐕🐰🦉🦊🐻🦋🐑🐱🐕🐰🦉🦊🐻🦋";
+var COMMENTS=["Which feels more like you?","Think about your real instincts~","Both are valid! Pick YOUR vibe 💕","Take your time with this one","Trust your gut!","Halfway through Phase 1!","You're doing great~","Phase 1 done! 🎉","Now — where do you thrive?","Your ideal environment...","How do you learn best?","Fun one!","Be honest with yourself~","This one reveals a LOT","Almost done Phase 2!","Phase 2 complete! ✨","Final stretch — how you contribute!","This one is revealing~","One of my favorites!","Which compliment stays with you?","Your instinct here matters!","Deep question~","Almost there!! 🐝","LAST ONE!! 🎉🎉"];
+var Q=[{p:1,q:"You just finished a really tough project. What feels better?",a:"I pushed myself and grew through it",b:"The work genuinely helped someone",av:"M",bv:"H"},{p:1,q:"Your team hits a wall. What's your first instinct?",a:"Analyze the root cause before acting",b:"Check in with each person first — how are they?",av:"M",bv:"H"},{p:1,q:"Choosing between two opportunities. What wins?",a:"It stretches me into new skills",b:"It aligns with what I deeply believe in",av:"M",bv:"H"},{p:1,q:"A friend asks for career advice. You naturally...",a:"Help them build a structured pros-and-cons framework",b:"Help them feel what's right at a deeper level",av:"M",bv:"H"},{p:1,q:"Which recognition hits harder for you?",a:"\"Your work was exceptional — measurable impact\"",b:"\"You made everyone on this team feel seen and valued\"",av:"M",bv:"H"},{p:1,q:"When you're completely drained, what restores you?",a:"Progress. Even tiny wins recharge me",b:"Connection. Someone who truly gets me",av:"M",bv:"H"},{p:1,q:"In a heated disagreement, you prioritize...",a:"Finding the most logical resolution",b:"Keeping the relationship strong long-term",av:"M",bv:"H"},{p:1,q:"End of your career. Which regret would be bigger?",a:"Not reaching my full potential",b:"Not making enough of a difference for people",av:"M",bv:"H"},{p:2,q:"Monday morning. What energizes you more?",a:"Calm schedule, deep-work blocks, clear plan",b:"New people, fast decisions, surprise problems",av:"C",bv:"O"},{p:2,q:"Your ideal team meeting looks like...",a:"Clear agenda, defined roles, efficient execution",b:"Whiteboard chaos, wild ideas, let's ship it",av:"C",bv:"O"},{p:2,q:"Learning something brand new. You prefer...",a:"Structured course, clear milestones, build systematically",b:"Jump in, break things, figure it out along the way",av:"C",bv:"O"},{p:2,q:"Which perk would you actually use?",a:"Senior mentor program with regular check-ins",b:"Innovation fund for my own side project",av:"C",bv:"O"},{p:2,q:"Org restructure just announced. Honestly?",a:"I need to understand the full plan first",b:"Curious! Change usually means new doors",av:"C",bv:"O"},{p:2,q:"Feedback that actually helps you grow?",a:"Detailed written review with clear next steps",b:"Candid, in-the-moment conversation — even if messy",av:"C",bv:"O"},{p:2,q:"Your ideal work rhythm is...",a:"Steady, sustainable marathon — consistency wins",b:"Intense sprints + real recovery — peaks and valleys",av:"C",bv:"O"},{p:2,q:"A project has zero clear goals. You...",a:"Push for clarity before building — ambiguity is waste",b:"Start building — goals always sharpen by doing",av:"C",bv:"O"},{p:3,q:"Complex project with many moving parts. You'd rather...",a:"Own one piece completely and make it excellent",b:"Coordinate all pieces and connect the dots",av:"Cr",bv:"Fu"},{p:3,q:"When you're presenting, you're strongest at...",a:"Data, methodology, precise conclusions",b:"Narrative — making people feel why it matters",av:"Cr",bv:"Fu"},{p:3,q:"People come to you when they need someone to...",a:"Analyze carefully and give the precise answer",b:"See hidden patterns and make surprising connections",av:"Cr",bv:"Fu"},{p:3,q:"Which compliment would you replay in your head?",a:"\"You are THE expert in this — nobody knows it like you\"",b:"\"You bring people and ideas together like no one else\"",av:"Cr",bv:"Fu"},{p:3,q:"Facing a hard problem. Your natural instinct?",a:"Narrow focus — isolate variables, test hypotheses",b:"Widen the lens — analogies from completely different fields",av:"Cr",bv:"Fu"},{p:3,q:"Which learning excites you more?",a:"Master one discipline at the deepest level",b:"Take five different classes and find hidden threads",av:"Cr",bv:"Fu"},{p:3,q:"Your ideal role on a team?",a:"The specialist everyone trusts for depth",b:"The translator between all the specialists",av:"Cr",bv:"Fu"},{p:3,q:"Conference you'd rather attend?",a:"Technical deep-dive workshop in your exact field",b:"Interdisciplinary panel mixing fields you've never combined",av:"Cr",bv:"Fu"}];
+var P=[
+{code:"HCC",em:"🐑",an:"Baby Lamb",nm:"The Trust Builder",tg:"I create warm spaces where people feel safe to grow.",sp:"Come sit with me~ I saved you the coziest spot 🌿",bg:"#E8F0E7",ac:"var(--sage)",superpower:"Creates psychological safety. Interviewers feel genuinely at ease around you — and that's rare. Your warmth plus preparation makes people trust you instantly.",story:"Tell about a time you made someone feel supported or helped a team through a difficult transition.",fortune:"Your warmth IS your interview weapon. People hire people they trust. 🐑",sci:"Maps to high relatedness need (Deci & Ryan), prevention regulatory focus (Higgins), and adaptive cognitive style (Kirton) — you stabilize environments through deep care and reliable expertise.",ax:[{l:"💖 Heart-Driven",c:"var(--pink-l)",t:"var(--pink-d)"},{l:"🏡 Structured",c:"var(--gold-l)",t:"var(--gold-d)"},{l:"🔧 Specialist",c:"var(--sky-l)",t:"var(--sky-d)"}],ch:["Creates psychological safety in any group","Deep expertise paired with genuine warmth","Notices struggles before they become crises","Builds reliable, caring systems"],bb:[["Warm & steady","var(--pink-l);color:var(--pink-d)"],["Deep expertise","var(--sage-l);color:var(--sage-d)"],["People-first","var(--lav-l);color:var(--lav-d)"],["Safe space maker","var(--gold-l);color:var(--gold-d)"],["Early radar","var(--sky-l);color:var(--sky-d)"],["Trustworthy","var(--peach-l);color:var(--peach-d)"]],phi:"You believe the best outcomes happen when people feel genuinely supported. Deep expertise + genuine warmth = environments where growth happens naturally.",str:["<strong>Safety creator</strong> — people open up and do their best work around you","<strong>Knowledge nurturer</strong> — your expertise helps others grow, not just yourself","<strong>Systems builder</strong> — you create consistent, clear, caring processes","<strong>Early radar</strong> — you spot struggles before anyone says a word"],bl:["May avoid necessary conflict to preserve harmony.","Might undervalue your own expertise in favor of supporting others."],act:["Give one piece of direct, honest feedback this week.","Document your expertise — write a 'how I do it' guide.","Say no to one request that drains you without growth."],ref:["Education & learning design","Healthcare & counseling","UX research","Community organizing","DEI leadership"],ic:"Mr. Rogers · Atticus Finch · Florence Nightingale · Gandalf"},
+{code:"HCF",em:"🐱",an:"Wise Cat",nm:"The Room Reader",tg:"I see the whole person — and adapt to what they need.",sp:"I see you~ like, really see you. Want to talk? 💜",bg:"#FBF5E8",ac:"var(--gold)",superpower:"Reads the room and adapts instantly. You tailor every answer to what the interviewer actually needs to hear. Empathy meets versatility.",story:"Describe a time you adapted your approach for different audiences or bridged a communication gap.",fortune:"You read rooms others miss. That adaptability is rare — NAME it in interviews. 🐱",sci:"High relatedness + prevention focus + innovative style. A rare combination: deeply empathetic AND creatively versatile. Maps to Rogers' person-centered approach meets design thinking.",ax:[{l:"💖 Heart-Driven",c:"var(--pink-l)",t:"var(--pink-d)"},{l:"🏡 Structured",c:"var(--gold-l)",t:"var(--gold-d)"},{l:"🌈 Generalist",c:"var(--lav-l)",t:"var(--lav-d)"}],ch:["Makes people feel truly seen and understood","Connects ideas across completely different worlds","Adapts communication style to each person","Bridges groups that don't normally talk"],bb:[["Sees the whole person","var(--gold-l);color:var(--gold-d)"],["Multi-talented","var(--pink-l);color:var(--pink-d)"],["Empathetic connector","var(--sage-l);color:var(--sage-d)"],["Adaptive style","var(--lav-l);color:var(--lav-d)"],["Bridge builder","var(--sky-l);color:var(--sky-d)"],["Versatile","var(--peach-l);color:var(--peach-d)"]],phi:"You see every person as a whole human. You weave perspectives together for solutions that honor everyone involved.",str:["<strong>Whole-person perceiver</strong> — truly sees people beyond their role","<strong>Cross-domain connector</strong> — finds surprising links between fields","<strong>Adaptive communicator</strong> — shifts style per audience naturally","<strong>Bridge builder</strong> — connects groups that were never talking"],bl:["Spread thin across too many worlds.","Absorb others' emotions — need intentional recovery."],act:["Go deep on ONE project this month — resist branching.","Schedule 10-min decompress after every intense conversation.","Let someone help YOU this week."],ref:["Program design","Coaching & mentoring","Cross-cultural communication","DEI strategy","Design research"],ic:"Maya Angelou · Uncle Iroh (Avatar) · Carl Rogers · Desmond Tutu"},
+{code:"HOC",em:"🐕",an:"Loyal Pup",nm:"The Action Hero",tg:"I go where people need me — and I deliver.",sp:"I'll go wherever you need me! Let's DO this! 🔥",bg:"#FDF3EC",ac:"var(--peach)",superpower:"Thrives in messy, unstructured situations. Your behavioral interview stories come from REAL chaos — and that's gold. You have the best examples.",story:"Share a time you solved a problem in an environment where standard approaches completely failed.",fortune:"You solve problems WHERE they happen. Your field stories ARE your competitive edge. 🐕",sci:"High relatedness + promotion focus + adaptive style. Embodies Bandura's self-efficacy in action — you believe in yourself BECAUSE you've been tested in the field, not the classroom.",ax:[{l:"💖 Heart-Driven",c:"var(--pink-l)",t:"var(--pink-d)"},{l:"🔥 Adaptive",c:"var(--peach-l)",t:"var(--peach-d)"},{l:"🔧 Specialist",c:"var(--sky-l)",t:"var(--sky-d)"}],ch:["Thrives in messy, unstructured environments","Builds trust with anyone, anywhere, fast","Simplifies complexity without dumbing down","Invents solutions when standard approaches fail"],bb:[["Goes where needed","var(--peach-l);color:var(--peach-d)"],["Rapid trust","var(--pink-l);color:var(--pink-d)"],["Field expert","var(--sage-l);color:var(--sage-d)"],["Simplifier","var(--sky-l);color:var(--sky-d)"],["Adaptable","var(--gold-l);color:var(--gold-d)"],["Action-first","var(--lav-l);color:var(--lav-d)"]],phi:"You go where people are. Genuine care + specialized expertise deployed in messy, real-world environments = extraordinary impact.",str:["<strong>Unstructured thriver</strong> — expertise shines in real contexts","<strong>Rapid trust builder</strong> — connects with anyone authentically","<strong>Complexity simplifier</strong> — makes the hard stuff accessible","<strong>Context inventor</strong> — creates solutions when the playbook fails"],bl:["Takes on too much — savior complex risk.","Resists formalizing your brilliant improvised methods."],act:["Write a how-I-do-it guide for ONE of your improvised skills.","Focus on ONE community this semester — go deeper, not wider.","Find a structured accountability partner (maybe an Owl!)."],ref:["Field research","Community health","Startups & early-stage","International development","Emergency response"],ic:"Paulo Freire · Anthony Bourdain · Hermione Granger"},
+{code:"HOF",em:"🐰",an:"Social Bunny",nm:"The Bridge Builder",tg:"Everyone has something brilliant to bring to the table.",sp:"OMG everyone is here!! This is gonna be SO good~ 💕",bg:"#FDF0F3",ac:"var(--pink)",superpower:"Builds instant rapport. Group interviews, networking events, and multi-stakeholder meetings are YOUR stage. You make connections no one else sees.",story:"Tell about a time you connected people or ideas that wouldn't have come together without you.",fortune:"Connection is a professional skill. In interviews, it IS the skill. 🐰",sci:"High relatedness + promotion focus + innovative style. Embodies Granovetter's 'strength of weak ties' — your network IS your contribution. Social capital theory in action.",ax:[{l:"💖 Heart-Driven",c:"var(--pink-l)",t:"var(--pink-d)"},{l:"🔥 Adaptive",c:"var(--peach-l)",t:"var(--peach-d)"},{l:"🌈 Generalist",c:"var(--lav-l)",t:"var(--lav-d)"}],ch:["Architects inclusive spaces where everyone contributes","Spots hidden strengths others completely miss","Transforms networking into genuine connection","Manages chaos with heart and energy"],bb:[["Inclusive leader","var(--pink-l);color:var(--pink-d)"],["Strength spotter","var(--lav-l);color:var(--lav-d)"],["Energy catalyst","var(--peach-l);color:var(--peach-d)"],["Connector","var(--sage-l);color:var(--sage-d)"],["Community builder","var(--gold-l);color:var(--gold-d)"],["Multi-tracker","var(--sky-l);color:var(--sky-d)"]],phi:"The best outcomes happen when everyone contributes their unique piece. You see potential in every single person.",str:["<strong>Inclusive architect</strong> — diverse voices get heard and valued","<strong>Hidden-strength spotter</strong> — sees gifts others miss in themselves","<strong>Energy catalyst</strong> — transforms networking into genuine connection","<strong>Multi-tracker</strong> — holds logistics + human element simultaneously"],bl:["The host who forgets to eat — nurtures everyone except yourself.","Struggles with solo deep-focus work."],act:["Schedule 2 hours of solo deep work this week — protect it fiercely.","Write YOUR personal goal before the next event you organize.","Ask someone to help you this week — practice receiving."],ref:["Event & program management","HR & organizational development","Community engagement","Partnership development","Social entrepreneurship"],ic:"Michelle Obama · Samwise Gamgee · Dolly Parton · Oprah Winfrey"},
+{code:"MCC",em:"🦉",an:"Night Owl",nm:"The Deep Preparer",tg:"Every cut intentional. Every choice backed by evidence.",sp:"Let me look at this more carefully... hmm, interesting 🧐",bg:"#EDF5FA",ac:"var(--sky)",superpower:"Exhaustive preparation. Your interview answers are airtight, well-structured, and backed by evidence. Interviewers trust you immediately because your depth shows.",story:"Walk us through how you analyzed a complex problem step by step — what did you see that others missed?",fortune:"Precision earns respect. Your preparation SHOWS — own it. 🦉",sci:"High competence need + prevention focus + adaptive style. Maps to Dweck's mastery orientation combined with Ericsson's deliberate practice theory. You don't just work hard — you work smart and deep.",ax:[{l:"🧠 Mastery",c:"var(--sky-l)",t:"var(--sky-d)"},{l:"🏡 Structured",c:"var(--gold-l)",t:"var(--gold-d)"},{l:"🔧 Specialist",c:"var(--sky-l)",t:"var(--sky-d)"}],ch:["Trusted authority — people rely on your accuracy","High internal standards, self-driven excellence","Finds elegant solutions from within constraints","Calm and steady when everything's on fire"],bb:[["Quiet intensity","var(--sky-l);color:var(--sky-d)"],["Trusted expert","var(--sage-l);color:var(--sage-d)"],["Internal compass","var(--gold-l);color:var(--gold-d)"],["Elegant solutions","var(--lav-l);color:var(--lav-d)"],["Calm under fire","var(--pink-l);color:var(--pink-d)"],["Flawless craft","var(--peach-l);color:var(--peach-d)"]],phi:"Mastery with quiet intensity. You perfect one discipline while others try everything — and the depth shows.",str:["<strong>Trusted authority</strong> — relied on for accuracy and depth","<strong>Internal compass</strong> — high standards, self-driven excellence","<strong>Constraint navigator</strong> — finds beauty within limitations","<strong>Calm under fire</strong> — steady presence when stakes are high"],bl:["Perfectionism can become paralysis — 'good enough' feels impossible.","May dismiss approaches that aren't rigorous enough for your standards."],act:["Ship something imperfect this week — on purpose.","Teach someone your basics — simplifying deepens mastery.","Try one wildly different approach to a familiar problem."],ref:["Research & academia","Data science & analytics","Technical writing","Management consulting","Quality assurance"],ic:"Marie Curie · Jiro Ono · Sherlock Holmes · Brené Brown"},
+{code:"MCF",em:"🦊",an:"Clever Fox",nm:"The Creative Solver",tg:"I don't follow recipes. I redesign them from scratch.",sp:"What if we tried it... completely differently? 💡",bg:"#F3EEF8",ac:"var(--lav)",superpower:"Creative reframing. You surprise interviewers with angles they never considered — and back them up with evidence. AI interviews test exactly this skill.",story:"Describe a time you found an unexpected solution by connecting ideas from completely different fields.",fortune:"Your unexpected angles make you unforgettable. Lean into the surprise. 🦊",sci:"High competence + prevention focus + innovative style. Combines Csikszentmihalyi's creative flow with Kahneman's System 2 rigor. Creativity grounded in evidence = powerful.",ax:[{l:"🧠 Mastery",c:"var(--sky-l)",t:"var(--sky-d)"},{l:"🏡 Structured",c:"var(--gold-l)",t:"var(--gold-d)"},{l:"🌈 Generalist",c:"var(--lav-l)",t:"var(--lav-d)"}],ch:["Finds connections invisible to everyone else","Creative ideas always backed by evidence","Challenges assumptions — productively","Builds transferable mental models and frameworks"],bb:[["What if...?","var(--lav-l);color:var(--lav-d)"],["Evidence + creativity","var(--sky-l);color:var(--sky-d)"],["Assumption breaker","var(--peach-l);color:var(--peach-d)"],["Cross-pollinator","var(--sage-l);color:var(--sage-d)"],["Framework builder","var(--gold-l);color:var(--gold-d)"],["Lab inventor","var(--pink-l);color:var(--pink-d)"]],phi:"Intellectual rigor meets creative experimentation. You ask 'what if?' before 'how do we?'",str:["<strong>Connection finder</strong> — sees invisible links others miss","<strong>Evidence innovator</strong> — creative AND data-backed","<strong>Assumption challenger</strong> — your 'why?' improves every team","<strong>Model builder</strong> — creates frameworks that transfer everywhere"],bl:["Overcomplicate simple problems — not everything needs reinvention.","Struggle explaining innovations to straightforward thinkers."],act:["Explain your best idea so a 10-year-old gets it.","Partner with a Lamb to execute — they'll ground your vision.","Keep an 'ideas parking lot' — not every idea needs action today."],ref:["Innovation & product design","Behavioral science research","Strategy consulting","Interdisciplinary research","Design thinking"],ic:"Leonardo da Vinci · Ada Lovelace · Doc Brown · Hayao Miyazaki"},
+{code:"MOC",em:"🐻",an:"Bold Bear",nm:"The Pressure Player",tg:"High heat, bold flavors, real results. Every time.",sp:"Let's GO. We've got this. Follow my lead! 💪",bg:"#FDF3EC",ac:"var(--peach)",superpower:"Thrives under pressure. High-stakes interviews, case competitions, and panel settings are where you come ALIVE. Your energy is contagious.",story:"Tell about a time you made a tough call under pressure — and delivered results because of it.",fortune:"Pressure is your stage. When others freeze, you perform. 🐻",sci:"High competence + promotion focus + adaptive style. Embodies Csikszentmihalyi's flow state under challenge. Your Yerkes-Dodson curve peaks higher than most — you literally perform better under stress.",ax:[{l:"🧠 Mastery",c:"var(--sky-l)",t:"var(--sky-d)"},{l:"🔥 Adaptive",c:"var(--peach-l)",t:"var(--peach-d)"},{l:"🔧 Specialist",c:"var(--sky-l)",t:"var(--sky-d)"}],ch:["Does best work when stakes are genuinely high","Makes bold, decisive calls — and stands behind them","Sets ambitious targets with clear execution plans","Pushes teams past what they thought possible"],bb:[["Clutch performer","var(--peach-l);color:var(--peach-d)"],["Bold decisions","var(--pink-l);color:var(--pink-d)"],["Always delivers","var(--sage-l);color:var(--sage-d)"],["High standards","var(--sky-l);color:var(--sky-d)"],["Team catalyst","var(--gold-l);color:var(--gold-d)"],["Resilient","var(--lav-l);color:var(--lav-d)"]],phi:"You thrive under real pressure. Deep expertise deployed in high-stakes environments = extraordinary results.",str:["<strong>Clutch performer</strong> — literally better when stakes are real","<strong>Decisive leader</strong> — makes calls AND stands behind them","<strong>Target setter</strong> — high bar + clear execution plan","<strong>Team catalyst</strong> — pushes everyone past their limits"],bl:["Can bulldoze quieter voices when moving fast.","May equate busyness with productivity — rest IS strategy."],act:["Speak last in your next meeting — listen first.","Block one full day with nothing scheduled — practice stillness.","Ask someone: 'What's it like when I'm stressed?' — then listen."],ref:["Operations & execution","Sales & business development","Strategy & consulting","Entrepreneurship","Crisis management"],ic:"Alexander Hamilton · Serena Williams · Shonda Rhimes · Captain America"},
+{code:"MOF",em:"🦋",an:"Free Butterfly",nm:"The Global Visionary",tg:"The whole world is my classroom — and my laboratory.",sp:"There are no walls here~ the whole world is cooking! 🌍",bg:"#ECF7F2",ac:"var(--mint)",superpower:"Big-picture, cross-cultural thinking. You connect dots across contexts that others literally cannot see. Global companies NEED this perspective.",story:"Share how your global perspective or cross-cultural experience fundamentally changed an outcome.",fortune:"Your global lens is exactly what companies need right now. Own it. 🦋",sci:"High competence + promotion focus + innovative style. Embodies Vygotsky's zone of proximal development across CULTURES — you stretch everyone's thinking by bringing perspectives they've never considered.",ax:[{l:"🧠 Mastery",c:"var(--sky-l)",t:"var(--sky-d)"},{l:"🔥 Adaptive",c:"var(--peach-l)",t:"var(--peach-d)"},{l:"🌈 Generalist",c:"var(--lav-l)",t:"var(--lav-d)"}],ch:["Translates across cultures, fields, and contexts","Holds big picture AND individual human impact","Adapts to literally any environment with excellence","Inspires with vision AND actionable strategy"],bb:[["No boundaries","var(--mint-l);color:var(--mint-d)"],["Systems thinker","var(--sky-l);color:var(--sky-d)"],["Culture crosser","var(--lav-l);color:var(--lav-d)"],["Vision + action","var(--peach-l);color:var(--peach-d)"],["Adapts anywhere","var(--gold-l);color:var(--gold-d)"],["Redesigns for all","var(--pink-l);color:var(--pink-d)"]],phi:"Connections across cultures, industries, and ideas. You redesign the recipe so everyone at the table can eat.",str:["<strong>Boundary crosser</strong> — moves ideas across invisible lines","<strong>Systems + souls</strong> — holds big picture AND individual impact","<strong>Context adaptive</strong> — same excellence in any environment","<strong>Vision + strategy</strong> — inspires the WHERE and the HOW"],bl:["Start too many things, finish too few — scope creep is real.","Restless in slow, stable environments — may create chaos for stimulation."],act:["Complete ONE initiative fully this semester — resist new shiny objects.","Find an Owl accountability partner to keep you grounded.","Write your 10-year vision — then work backward to THIS week."],ref:["International organizations","Global health","Social entrepreneurship","Systems change","Cross-cultural consulting"],ic:"Aristotle · Malala Yousafzai · Wangari Maathai · Captain Picard"}
+];
+var cur=0,ans=new Array(24).fill(null),demo={};
+var timerInterval=null,timerSeconds=0,streak=0;
+function startTimer(){timerSeconds=0;document.getElementById("timerWrap").classList.add("vis");updateTimerDisplay();timerInterval=setInterval(function(){timerSeconds++;updateTimerDisplay()},1000)}
+function stopTimer(){clearInterval(timerInterval)}
+function updateTimerDisplay(){var m=Math.floor(timerSeconds/60);var s=timerSeconds%60;document.getElementById("timerVal").textContent=m+":"+(s<10?"0":"")+s}
+function fireConfetti(count,colors){var container=document.createElement("div");container.className="confetti-container";document.body.appendChild(container);for(var i=0;i<(count||30);i++){var piece=document.createElement("div");piece.className="confetti-piece";var c=(colors||["var(--pink)","var(--lav)","var(--sage)","var(--gold)","var(--sky)","var(--peach)","var(--mint)"])[Math.floor(Math.random()*7)];piece.style.cssText="left:"+Math.random()*100+"%;background:"+c+";--dur:"+(1.5+Math.random()*2)+"s;animation-delay:"+(Math.random()*.5)+"s;width:"+(6+Math.random()*6)+"px;height:"+(6+Math.random()*6)+"px;border-radius:"+(Math.random()>.5?"50%":"2px");container.appendChild(piece)}setTimeout(function(){container.remove()},4000)}
+function spawnSparkles(el){var sparkles=["✨","💫","⭐","🌟","💖"];for(var i=0;i<4;i++){var sp=document.createElement("span");sp.className="sparkle";sp.textContent=sparkles[Math.floor(Math.random()*sparkles.length)];sp.style.left=(20+Math.random()*60)+"%";sp.style.top=(10+Math.random()*40)+"%";sp.style.animationDelay=(i*0.08)+"s";el.style.position="relative";el.appendChild(sp);setTimeout(function(s){s.remove()}.bind(null,sp),800)}}
+function showStreak(){if(streak<3)return;var msgs=[{n:3,t:"🔥 3 in a row!",c:"Nice flow~"},{n:5,t:"⚡ 5 streak!",c:"You're on fire!"},{n:8,t:"🌟 8 streak!",c:"Phase complete!"},{n:10,t:"💫 10 streak!",c:"Unstoppable~"},{n:15,t:"🚀 15 streak!",c:"Almost there!"},{n:20,t:"✨ 20 streak!",c:"Legend status!"},{n:24,t:"🏆 PERFECT!",c:"All 24 done!"}];var msg=null;for(var i=msgs.length-1;i>=0;i--){if(streak>=msgs[i].n){msg=msgs[i];break}}if(!msg||streak!==msg.n)return;var pop=document.createElement("div");pop.className="streak-pop";pop.innerHTML='<div class="streak-badge">'+msg.t+' <span style="font-weight:400;font-size:.75rem;color:var(--text-s)">'+msg.c+"</span></div>";document.body.appendChild(pop);setTimeout(function(){pop.remove()},1000)}
+function showPhaseTransition(phaseNum,callback){var phases=[{emoji:"💖",title:"Phase 1 Complete!",sub:"Now let's explore where you thrive...",bg:"var(--pink-l)",dots:["var(--pink)","var(--border-l)","var(--border-l)"]},{emoji:"💜",title:"Phase 2 Complete!",sub:"Final stretch — how do you contribute?",bg:"var(--lav-l)",dots:["var(--pink)","var(--lav)","var(--border-l)"]},{emoji:"🎉",title:"All Done!",sub:"Let's reveal your interview animal...",bg:"var(--sage-l)",dots:["var(--pink)","var(--lav)","var(--sage)"]}];var p=phases[phaseNum];var screen=document.createElement("div");screen.className="phase-screen";screen.style.background=p.bg;var dotsH="";p.dots.forEach(function(d){dotsH+='<div class="phase-dot" style="background:'+d+'"></div>'});screen.innerHTML='<div class="phase-emoji">'+p.emoji+'</div><div class="phase-title">'+p.title+'</div><div class="phase-sub">'+p.sub+'</div><div class="phase-dots">'+dotsH+"</div>";document.body.appendChild(screen);fireConfetti(25);setTimeout(function(){screen.classList.add("out");setTimeout(function(){screen.remove();if(callback)callback()},400)},1600)}
+function showRevealAnimation(profile,callback){var overlay=document.createElement("div");overlay.className="reveal-overlay";overlay.style.background="rgba(251,248,243,.85)";overlay.innerHTML='<div class="reveal-card"><div class="reveal-emoji">'+profile.em+'</div><div class="reveal-name">'+profile.an+'</div><div class="reveal-sub">'+profile.nm+'</div></div>';document.body.appendChild(overlay);fireConfetti(50);setTimeout(function(){overlay.style.transition="opacity .4s";overlay.style.opacity="0";setTimeout(function(){overlay.remove();if(callback)callback()},400)},2200)}
+function chkD(){document.getElementById("dN").disabled=!(document.getElementById("dS").value&&document.getElementById("dD").value)}
+function goStart(){document.getElementById("hero").style.display="none";document.getElementById("dSec").classList.add("active")}
+function goQ(){demo={school:document.getElementById("dS").value,stage:document.getElementById("dD").value};document.getElementById("dSec").classList.remove("active");document.getElementById("prog").classList.add("vis");document.getElementById("qSec").classList.add("active");cur=0;streak=0;startTimer();renderQ()}
+function renderQ(){var q=Q[cur],ph=q.p-1;var colors=PHASE_COLORS[ph];document.getElementById("pF").style.width=((cur+1)/24*100)+"%";document.getElementById("phL").textContent=PHASE_NAMES[ph];document.getElementById("phL").style.color=colors.c;document.getElementById("qB").textContent=COMMENTS[cur];var scatter="";for(var i=0;i<6;i++){var e=SCATTER_POOL[(cur*3+i)%SCATTER_POOL.length];scatter+='<span style="left:'+(5+Math.random()*85)+"%;top:"+(5+Math.random()*40)+"%;animation-delay:"+(Math.random()*4)+"s;font-size:"+(13+Math.random()*12)+'px;opacity:.1">'+e+"</span>"}var animal=QA[cur]||"";var c=ans[cur];document.getElementById("qP").innerHTML='<div class="scatter">'+scatter+"</div>"+'<div class="q-phase" style="color:'+colors.c+'">'+PHASE_NAMES[ph]+"</div>"+'<div class="q-counter" style="background:'+colors.bg+'"><span class="qa">'+animal+"</span>"+(cur+1)+"/24</div>"+'<div class="q-text">'+q.q+"</div>"+'<div class="q-opts">'+'<div class="q-opt ao'+(c==="a"?" sel":"")+'" onclick="pick(\'a\')">'+q.a+"</div>"+'<div class="q-opt bo'+(c==="b"?" sel":"")+'" onclick="pick(\'b\')">'+q.b+"</div></div>"+'<div class="q-nav">'+'<button class="btn btn-ghost" style="visibility:'+(cur>0?"visible":"hidden")+'" onclick="prev()">← Back</button>'+'<button class="btn btn-pri" '+(c===null?"disabled":"")+' onclick="next()">'+(cur===23?"See My Animal! 🐝":"Next →")+"</button></div>"}
+function pick(v){ans[cur]=v;streak++;var opts=document.querySelectorAll(".q-opt");var idx=v==="a"?0:1;if(opts[idx])spawnSparkles(opts[idx]);showStreak();renderQ()}
+function next(){if(cur===23){stopTimer();showPhaseTransition(2,function(){var r=calc(),p=null;for(var i=0;i<P.length;i++){if(P[i].code===r.code){p=P[i];break}}if(!p)p=P[7];showRevealAnimation(p,function(){doShowR()})});return}var nextPhase=Q[cur+1].p;var curPhase=Q[cur].p;if(nextPhase!==curPhase){showPhaseTransition(curPhase-1,function(){cur++;renderQ();window.scrollTo({top:0,behavior:"smooth"})})}else{cur++;renderQ();window.scrollTo({top:0,behavior:"smooth"})}}
+function prev(){if(cur>0){cur--;renderQ();window.scrollTo({top:0,behavior:"smooth"})}}
+function calc(){var H=0,M=0,C=0,O=0,Cr=0,Fu=0;Q.forEach(function(q,i){if(!ans[i])return;var v=ans[i]==="a"?q.av:q.bv;if(v==="H")H++;if(v==="M")M++;if(v==="C")C++;if(v==="O")O++;if(v==="Cr")Cr++;if(v==="Fu")Fu++});return{code:(H>=M?"H":"M")+(C>=O?"C":"O")+(Cr>=Fu?"C":"F"),sc:{H:H,M:M,C:C,O:O,Cr:Cr,Fu:Fu}}}
+function doShowR(){document.getElementById("qSec").classList.remove("active");document.getElementById("qM").style.display="none";document.getElementById("rSec").classList.add("active");document.getElementById("pF").style.width="100%";document.getElementById("phL").textContent="Complete!";document.getElementById("phL").style.color="var(--sage-d)";var r=calc(),p=null;for(var i=0;i<P.length;i++){if(P[i].code===r.code){p=P[i];break}}if(!p)p=P[7];var sc=r.sc;var decos=["💖","⭐","✨","🌸","🎀","💫","☁️","🐾"];var scH="";for(var j=0;j<8;j++){scH+='<span style="left:'+(5+j*12)+"%;top:"+(10+Math.sin(j)*22)+"%;font-size:"+(14+Math.random()*8)+"px;opacity:.1;animation-delay:"+(j*.4)+'s">'+decos[j]+"</span>"}var axH="";p.ax.forEach(function(a){axH+='<span style="padding:.2rem .55rem;border-radius:100px;font-size:.68rem;font-weight:600;background:'+a.c+";color:"+a.t+'">'+a.l+"</span>"});var chH="";p.ch.forEach(function(c){chH+='<div style="display:flex;align-items:flex-start;gap:.3rem;padding:.25rem 0;font-size:.8rem;line-height:1.4"><span style="flex-shrink:0">✅</span>'+c+"</div>"});var bbH="";p.bb.forEach(function(b){bbH+='<div style="padding:.25rem .55rem;border-radius:14px;font-size:.7rem;font-weight:600;background:'+b[1]+'">'+b[0]+"</div>"});document.getElementById("rC").innerHTML='<div class="rc" style="background:'+p.bg+'">'+'<div class="scatter">'+scH+"</div>"+'<div style="position:relative;z-index:1">'+'<div style="font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--esp)">Your Interview Instinct</div>'+'<div style="font-size:4rem;margin:.2rem 0">'+p.em+"</div>"+'<div style="font-family:DM Serif Display,serif;font-size:1.7rem;color:var(--esp)">'+p.an+"</div>"+'<div style="font-family:DM Serif Display,serif;font-size:.95rem;color:'+p.ac+';margin-bottom:.2rem">'+p.nm+"</div>"+'<div style="font-style:italic;font-size:.88rem;color:var(--esp);opacity:.7;margin-bottom:.7rem">"'+p.tg+'"</div>'+'<div style="display:flex;gap:.25rem;justify-content:center;flex-wrap:wrap;margin-bottom:.6rem">'+axH+"</div>"+'<div style="background:var(--card);border-radius:16px;padding:.55rem .8rem;font-size:.83rem;max-width:280px;margin:.4rem auto;box-shadow:0 1px 6px var(--sh);line-height:1.5">'+p.sp+"</div>"+'<div class="superpower"><h4>'+p.em+" Interview Superpower</h4><p>"+p.superpower+"</p></div>"+'<div style="background:rgba(255,255,255,.5);border-radius:14px;padding:.7rem .9rem;margin:.4rem 0;text-align:left">'+'<div style="font-size:.7rem;font-weight:700;color:var(--esp);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.35rem">'+p.em+" Your "+p.an+" Traits</div>"+chH+"</div>"+'<div style="display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-bottom:.5rem">'+bbH+"</div>"+'<div class="story-prompt"><h4>🐝 Your HIVE Story Prompt (use in workshop!)</h4><p>'+p.story+"</p></div>"+'<div class="fortune">'+p.fortune+"</div>"+'<div style="margin-top:.4rem;font-size:.7rem;color:var(--text-xs);text-align:center">⏱ Completed in '+Math.floor(timerSeconds/60)+'m '+(timerSeconds%60)+'s</div>'+"</div></div>"+'<div class="bcg-box"><h4>🐝 Practice Before:</h4><p>BCG site visit Feb 27 · McKinsey Mar 3 · Cisco Apr 10</p></div>';document.getElementById("rDims").innerHTML='<div class="dim-card"><div class="dim-name">Dimension 1 · Motivation</div>'+'<div class="dim-labels"><span>🧠 Mastery ('+sc.M+"/8)</span><span>💖 Heart ("+sc.H+"/8)</span></div>"+'<div class="dim-bar-track"><div class="dim-bar-fill" style="width:'+Math.round(sc.H/8*100)+"%;background:linear-gradient(90deg,var(--sky),var(--pink))\"></div></div>"+'<div class="dim-sci">Self-Determination Theory (Deci & Ryan): Competence vs. Relatedness</div></div>'+'<div class="dim-card"><div class="dim-name">Dimension 2 · Environment</div>'+'<div class="dim-labels"><span>🏡 Structured ('+sc.C+"/8)</span><span>🔥 Adaptive ("+sc.O+"/8)</span></div>"+'<div class="dim-bar-track"><div class="dim-bar-fill" style="width:'+Math.round(sc.O/8*100)+"%;background:linear-gradient(90deg,var(--gold),var(--peach))\"></div></div>"+'<div class="dim-sci">Regulatory Focus Theory (Higgins): Prevention vs. Promotion</div></div>'+'<div class="dim-card"><div class="dim-name">Dimension 3 · Contribution</div>'+'<div class="dim-labels"><span>🔧 Specialist ('+sc.Cr+"/8)</span><span>🌈 Generalist ("+sc.Fu+"/8)</span></div>"+'<div class="dim-bar-track"><div class="dim-bar-fill" style="width:'+Math.round(sc.Fu/8*100)+"%;background:linear-gradient(90deg,var(--sage),var(--lav))\"></div></div>"+'<div class="dim-sci">Cognitive Style (Kirton): Adaptive vs. Innovative</div></div>';var strH="";p.str.forEach(function(s){strH+='<div class="si">'+s+"</div>"});var blH="";p.bl.forEach(function(b){blH+='<div class="bi">⚠️ '+b+"</div>"});var actH="";p.act.forEach(function(a,i){actH+='<div class="ai"><div class="ai-n">'+(i+1)+"</div><div>"+a+"</div></div>"});var refH="";p.ref.forEach(function(r){refH+='<span class="ref-tag">'+r+"</span>"});document.getElementById("rP").innerHTML='<div class="pcard"><h3>🧬 The Science</h3><p style="font-size:.82rem;line-height:1.65;color:var(--text-s);font-style:italic">'+p.sci+"</p></div>"+'<div class="pcard"><h3>💡 Philosophy</h3><p style="font-size:.84rem;line-height:1.65">'+p.phi+"</p></div>"+'<div class="pcard"><h3>💪 Strengths</h3>'+strH+"</div>"+'<div class="pcard"><h3>⚡ Watch Out</h3>'+blH+"</div>"+'<div class="pcard"><h3>✅ Try This Week</h3>'+actH+"</div>"+'<div class="pcard"><h3>🧭 Career Paths</h3><div class="ref-list">'+refH+"</div></div>"+'<div class="pcard"><h3>✨ Icons Like You</h3><p style="font-size:.82rem">'+p.ic+"</p></div>";save(r.code,p.nm,p.an,r.sc);window.scrollTo({top:0})}
+var GOOGLE_FORM_ENABLED=true;
+var FORM_ACTION_URL="https://docs.google.com/forms/d/e/1FAIpQLScQjF49E-SXuGBvnOkhmhweuQlcbGQkz5-TP0-6WLWeTVSUfg/formResponse";
+var FORM_FIELDS={timestamp:"entry.1471968527",code:"entry.639492356",animal:"entry.60553076",school:"entry.1533356770",stage:"entry.350198017",heartPct:"entry.327029830",mindPct:"entry.144002372",structPct:"entry.317209232",adaptPct:"entry.693543821",specPct:"entry.619213769",genPct:"entry.1256279700",answers:"entry.1088618523",timeSec:"entry.1785770678"};
+function sendToGoogle(code,animal,sc){if(!GOOGLE_FORM_ENABLED)return;try{var params=new URLSearchParams();params.append(FORM_FIELDS.timestamp,new Date().toISOString());params.append(FORM_FIELDS.code,code);params.append(FORM_FIELDS.animal,animal);params.append(FORM_FIELDS.school,demo.school||"");params.append(FORM_FIELDS.stage,demo.stage||"");params.append(FORM_FIELDS.heartPct,Math.round(sc.H/8*100));params.append(FORM_FIELDS.mindPct,Math.round(sc.M/8*100));params.append(FORM_FIELDS.structPct,Math.round(sc.C/8*100));params.append(FORM_FIELDS.adaptPct,Math.round(sc.O/8*100));params.append(FORM_FIELDS.specPct,Math.round(sc.Cr/8*100));params.append(FORM_FIELDS.genPct,Math.round(sc.Fu/8*100));params.append(FORM_FIELDS.answers,ans.join(","));params.append(FORM_FIELDS.timeSec,timerSeconds);var iframe=document.getElementById("gFormFrame");if(!iframe){iframe=document.createElement("iframe");iframe.id="gFormFrame";iframe.name="gFormFrame";iframe.style.cssText="display:none;width:0;height:0;border:0;position:absolute";document.body.appendChild(iframe)}var form=document.createElement("form");form.method="POST";form.action=FORM_ACTION_URL;form.target="gFormFrame";form.style.display="none";params.forEach(function(val,key){var input=document.createElement("input");input.type="hidden";input.name=key;input.value=val;form.appendChild(input)});document.body.appendChild(form);form.submit();setTimeout(function(){form.remove()},2000)}catch(e){}}
+function save(code,name,animal,sc){try{var d=JSON.parse(localStorage.getItem("ii3")||"[]");d.push({ts:new Date().toISOString(),code:code,name:name,animal:animal,school:demo.school||"",stage:demo.stage||"",ans:ans.slice(),H:Math.round(sc.H/8*100),M:Math.round(sc.M/8*100),C:Math.round(sc.C/8*100),O:Math.round(sc.O/8*100),Cr:Math.round(sc.Cr/8*100),Fu:Math.round(sc.Fu/8*100),timeSec:timerSeconds});localStorage.setItem("ii3",JSON.stringify(d))}catch(e){}sendToGoogle(code,animal,sc)}
+function getData(){try{return JSON.parse(localStorage.getItem("ii3")||"[]")}catch(e){return[]}}
+function togA(){document.getElementById("adm").classList.toggle("vis");updA()}
+function updA(){var d=getData(),b=document.getElementById("aB");if(!d.length){b.innerHTML='<p style="font-size:.73rem;color:var(--text-s)">No data yet.</p>';return}var dist={};d.forEach(function(x){var k=x.animal||x.name;dist[k]=(dist[k]||0)+1});var h='<div class="adm-r"><span class="l">Total</span><span class="v">'+d.length+"</span></div>";h+='<div class="adm-s">Animals</div>';Object.keys(dist).sort(function(a,b){return dist[b]-dist[a]}).forEach(function(k){h+='<div class="adm-r"><span class="l">'+k+'</span><span class="v">'+dist[k]+"</span></div>"});var sD={};d.forEach(function(x){if(x.school)sD[x.school]=(sD[x.school]||0)+1});if(Object.keys(sD).length){h+='<div class="adm-s">Schools</div>';Object.keys(sD).sort(function(a,b){return sD[b]-sD[a]}).forEach(function(k){h+='<div class="adm-r"><span class="l">'+k+'</span><span class="v">'+sD[k]+"</span></div>"})}b.innerHTML=h}
+function exCSV(){var d=getData();if(!d.length)return;var h=["ts","code","name","animal","school","stage","H","M","C","O","Cr","Fu"];for(var i=0;i<24;i++)h.push("Q"+(i+1));var c=h.join(",")+"\n";d.forEach(function(r){var row=[r.ts,r.code,r.name,r.animal||"",r.school,r.stage,r.H,r.M,r.C,r.O,r.Cr,r.Fu].concat(r.ans||[]);c+=row.map(function(v){return'"'+String(v||"").replace(/"/g,'""')+'"'}).join(",")+"\n"});var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([c],{type:"text/csv"}));a.download="interview-instinct-data.csv";a.click()}
+function clr(){if(confirm("Clear all data?")){localStorage.removeItem("ii3");updA()}}
+function dlR(){var r=calc(),p=null;for(var i=0;i<P.length;i++){if(P[i].code===r.code){p=P[i];break}}if(!p)p=P[7];var t="═".repeat(40)+"\n  "+p.em+" "+p.an+" — "+p.nm+"\n  \""+p.tg+"\"\n"+"═".repeat(40)+"\n\n🐝 INTERVIEW SUPERPOWER\n"+p.superpower+"\n\n🐝 HIVE STORY PROMPT\n"+p.story+"\n\n🔮 FORTUNE\n"+p.fortune+"\n\n🧬 THE SCIENCE\n"+p.sci+"\n\n💡 PHILOSOPHY\n"+p.phi+"\n\n💪 STRENGTHS\n"+p.str.map(function(s,i){return(i+1)+". "+s.replace(/<[^>]*>/g,"")}).join("\n")+"\n\n⚡ WATCH OUT\n"+p.bl.map(function(b,i){return(i+1)+". "+b}).join("\n")+"\n\n✅ TRY THIS WEEK\n"+p.act.map(function(a,i){return(i+1)+". "+a}).join("\n")+"\n\n🧭 CAREER PATHS: "+p.ref.join(" · ")+"\n✨ ICONS: "+p.ic+"\n";var n=document.getElementById("notes").value;if(n)t+="\n📝 MY NOTES: "+n+"\n";t+="\n"+"─".repeat(40)+"\nInterview Instinct v3 — Bella Kang\nUT Austin OCLD · IWG Workshop #2 · Feb 24, 2026\nGrounded in SDT, Regulatory Focus Theory & Cognitive Style Research";var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/plain"}));a.download="my-interview-instinct.txt";a.click()}
+function restart(){ans=new Array(24).fill(null);cur=0;demo={};streak=0;timerSeconds=0;stopTimer();document.getElementById("timerWrap").classList.remove("vis");document.querySelectorAll(".sec").forEach(function(s){s.classList.remove("active")});document.getElementById("prog").classList.remove("vis");document.getElementById("qM").style.display="";document.getElementById("hero").style.display="";document.getElementById("notes").value="";document.getElementById("dS").selectedIndex=0;document.getElementById("dD").selectedIndex=0;document.getElementById("dN").disabled=true;window.scrollTo({top:0})}
+</script>
 </body>
 </html>
