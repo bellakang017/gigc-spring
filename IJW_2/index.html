@@ -1,1 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IWG Workshop #2 — Interview Instinct | Bella Kang</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐝</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0A0A0B;
+      --noir: #1D1D1F;
+      --charcoal: #424245;
+      --grey: #6E6E73;
+      --silver: #9A9A9F;
+      --mist: #D2D2D7;
+      --cloud: #F5F5F7;
+      --snow: #FAFAFA;
+      --white: #FFFFFF;
+      --gold: #C9A96E;
+      --gold-deep: #A68B4B;
+      --gold-light: #E8D5B0;
+      --gold-wash: #FAF6EF;
+      --sage: #6B8F71;
+      --sage-wash: #F0F5F1;
+      --ocean: #5B7FA5;
+      --berry: #A05B6B;
+      --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --sans: 'DM Sans', -apple-system, 'Helvetica Neue', sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--charcoal);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(210,210,215,0.4);
+      transition: all .3s;
+    }
+    nav .logo {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--noir);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    nav .logo span { color: var(--gold); }
+    nav .nav-links { display: flex; gap: 2rem; }
+    nav .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--grey);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color .3s;
+    }
+    nav .nav-links a:hover { color: var(--noir); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 85vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(201,169,110,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(107,143,113,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 720px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: var(--cloud);
+      border: 1px solid var(--mist);
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--grey);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag .dot {
+      width: 6px; height: 6px;
+      background: var(--sage);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--noir);
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--grey);
+      line-height: 1.6;
+      max-width: 520px;
+      margin-left: auto; margin-right: auto;
+    }
+    .hero-meta {
+      margin-top: 2rem;
+      display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--silver);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta-item strong { color: var(--charcoal); font-weight: 600; }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 5rem 2rem; }
+    .section-inner { max-width: 800px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .section h2 {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--noir);
+      margin-bottom: 1rem;
+    }
+    .section h2 em { font-style: italic; color: var(--gold); }
+    .section p {
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+    .section p + p { margin-top: 0.8rem; }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      max-width: 800px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mist), transparent);
+    }
+
+    /* ─── OVERVIEW ─── */
+    .overview-bg { background: var(--snow); }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 640px) { .overview-grid { grid-template-columns: 1fr; } }
+    .overview-card {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 16px;
+      padding: 1.8rem 1.4rem;
+      transition: all .4s cubic-bezier(.16,1,.3,1);
+    }
+    .overview-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+      border-color: var(--gold-light);
+    }
+    .overview-card .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+    .overview-card h3 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--noir);
+      margin-bottom: 0.4rem;
+    }
+    .overview-card p {
+      font-size: 0.82rem;
+      color: var(--grey);
+      line-height: 1.55;
+      max-width: none;
+    }
+
+    /* ─── FRAMEWORK ─── */
+    .framework-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 640px) { .framework-row { grid-template-columns: 1fr; } }
+    .fw-scholars {
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .fw-scholar {
+      padding: 0.6rem 0.8rem;
+      background: var(--cloud);
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1.4;
+    }
+    .fw-scholar strong {
+      display: block;
+      font-weight: 700;
+      color: var(--noir);
+      font-size: 0.75rem;
+    }
+    .fw-body p {
+      font-size: 0.92rem;
+      color: var(--charcoal);
+      line-height: 1.7;
+    }
+
+    /* ─── MATERIALS ─── */
+    .materials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 540px) { .materials-grid { grid-template-columns: 1fr; } }
+    .material-card {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 14px;
+      text-decoration: none;
+      transition: all .35s cubic-bezier(.16,1,.3,1);
+    }
+    .material-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+      border-color: var(--gold-light);
+    }
+    .material-icon {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--gold-wash);
+      border-radius: 12px;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .material-info h4 {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--noir);
+    }
+    .material-info p {
+      font-size: 0.72rem;
+      color: var(--silver);
+      margin-top: 2px;
+      max-width: none;
+    }
+
+    /* ─── TIMELINE ─── */
+    .timeline { margin-top: 2rem; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--cloud);
+      align-items: start;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-time {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--gold-deep);
+      padding-top: 2px;
+    }
+    .timeline-content h4 {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--noir);
+    }
+    .timeline-content p {
+      font-size: 0.82rem;
+      color: var(--grey);
+      margin-top: 0.2rem;
+      max-width: none;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--cloud);
+    }
+    footer p {
+      font-size: 0.78rem;
+      color: var(--silver);
+      line-height: 1.8;
+      max-width: none;
+    }
+    footer strong { color: var(--charcoal); font-weight: 600; }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="logo">Bella <span>Kang</span></a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#framework">Framework</a>
+      <a href="#materials">Materials</a>
+      <a href="#agenda">Agenda</a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-inner reveal">
+      <div class="hero-tag"><span class="dot"></span>IWG Workshop Series · #2 of 6</div>
+      <h1>Interview <em>Instinct</em></h1>
+      <p class="hero-sub">Helping international graduate students discover their natural interview style through animal archetypes, structured storytelling, and consulting-level thinking tools.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item"><strong>Date</strong> Feb 24, 2026</span>
+        <span class="hero-meta-item"><strong>Duration</strong> 60 min</span>
+        <span class="hero-meta-item"><strong>Audience</strong> International grad students</span>
+        <span class="hero-meta-item"><strong>Role</strong> Designer & Facilitator</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <section class="section overview-bg" id="overview">
+    <div class="section-inner reveal">
+      <div class="section-label">01 — Overview</div>
+      <h2>The <em>Problem</em></h2>
+      <p>International students face a double bind in U.S. interviews: cultural norms around self-promotion conflict with values of humility and collectivism. Generic "be confident" advice fails because it ignores the identity work underneath.</p>
+      <p>This workshop reframes interview preparation as self-discovery — not performance coaching.</p>
+
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="card-icon">🐝</div>
+          <h3>Animal Archetypes</h3>
+          <p>8 interview instinct types that validate diverse strengths — from trust-building Lambs to big-picture Butterflies.</p>
+        </div>
+        <div class="overview-card">
+          <div class="card-icon">🧩</div>
+          <h3>HIVE Framework</h3>
+          <p>A culturally-adapted STAR alternative — Habitat, Initiative, Venture, Effect — designed for cross-cultural storytelling.</p>
+        </div>
+        <div class="overview-card">
+          <div class="card-icon">🔍</div>
+          <h3>Thinking Toolkit</h3>
+          <p>Ask → Structure → Refine. Consulting-level problem-solving tools accessible to every student.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ FRAMEWORK ═══ -->
+  <section class="section" id="framework">
+    <div class="section-inner reveal">
+      <div class="section-label">02 — Theoretical Framework</div>
+      <h2>Evidence-Based <em>Design</em></h2>
+      <p>Every element of this workshop maps to peer-reviewed behavioral science — not intuition.</p>
+
+      <div class="framework-row">
+        <div class="fw-scholars">
+          <div class="fw-scholar"><strong>Yeager</strong>Belonging & growth mindset interventions</div>
+          <div class="fw-scholar"><strong>Crum</strong>Stress-as-enhancing mindset</div>
+          <div class="fw-scholar"><strong>Falk</strong>Self-relevance in persuasion & neural coupling</div>
+          <div class="fw-scholar"><strong>Millán</strong>Embodied cognition & calm leadership</div>
+        </div>
+        <div class="fw-body">
+          <p>The animal quiz uses <strong>identity-congruent messaging</strong> (Falk): students choose an archetype that validates who they already are, not who they should become. The HIVE framework applies <strong>structured reflection</strong> as a belonging intervention (Yeager): by naming their habitat and initiative, students reframe cross-cultural experience as competitive advantage.</p>
+          <p>The 60-second practice integrates <strong>stress reappraisal</strong> (Crum) — time pressure becomes a tool for focus, not anxiety. The partner feedback loop creates <strong>social proof of competence</strong>, directly countering imposter narratives common among international students.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ MATERIALS ═══ -->
+  <section class="section overview-bg" id="materials">
+    <div class="section-inner reveal">
+      <div class="section-label">03 — Workshop Materials</div>
+      <h2>Built <em>Assets</em></h2>
+      <p>All materials designed for dual use: live facilitation and self-guided practice.</p>
+
+      <div class="materials-grid">
+        <a class="material-card" href="interview-instinct.html">
+          <div class="material-icon">🌐</div>
+          <div class="material-info">
+            <h4>Interactive Quiz</h4>
+            <p>interview-instinct.html · Live web app with timer</p>
+          </div>
+        </a>
+        <a class="material-card" href="docs/IWG_Workshop2_Handout.docx">
+          <div class="material-icon">📄</div>
+          <div class="material-info">
+            <h4>Print Handout</h4>
+            <p>IWG_Workshop2_Handout.docx · 3-page worksheet</p>
+          </div>
+        </a>
+        <a class="material-card" href="docs/facilitator-script.md">
+          <div class="material-icon">🎤</div>
+          <div class="material-info">
+            <h4>Facilitator Script</h4>
+            <p>facilitator-script.md · Minute-by-minute guide</p>
+          </div>
+        </a>
+        <a class="material-card" href="https://github.com/bellakang017/gigc-spring">
+          <div class="material-icon">💻</div>
+          <div class="material-info">
+            <h4>Source Code</h4>
+            <p>github.com/bellakang017/gigc-spring</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ AGENDA ═══ -->
+  <section class="section" id="agenda">
+    <div class="section-inner reveal">
+      <div class="section-label">04 — Session Flow</div>
+      <h2>60-Minute <em>Agenda</em></h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">3:00</div>
+          <div class="timeline-content">
+            <h4>Welcome & Ground</h4>
+            <p>Name, icebreaker, frame the session. "Interviews aren't about performing."</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">3:08</div>
+          <div class="timeline-content">
+            <h4>Find Your Instinct</h4>
+            <p>Animal quiz, red envelope reveal, group share.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">3:20</div>
+          <div class="timeline-content">
+            <h4>Build Your HIVE</h4>
+            <p>Teach framework, individual writing, 60-second partner practice with feedback.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">3:40</div>
+          <div class="timeline-content">
+            <h4>Sharpen Your Thinking</h4>
+            <p>Ask → Structure → Refine exercises. Consulting-level problem decomposition.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">3:52</div>
+          <div class="timeline-content">
+            <h4>Close & Next Steps</h4>
+            <p>Synthesis, BCG visit preview, closing reflection.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Bella Kang</strong> · M.A. Advertising, UT Austin<br>
+      Graduate Global Impact Consultant · Office of Career & Life Design<br>
+      Spring 2026 · <a href="https://github.com/bellakang017/gigc-spring">View on GitHub</a>
+    </p>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
