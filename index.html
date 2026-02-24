@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabinet of Curiosities — Bella Kang</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪞</text></svg>">
+  <meta name="theme-color" content="#C9A96E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --noir: #1D1D1F;
+      --charcoal: #424245;
+      --grey: #6E6E73;
+      --silver: #86868B;
+      --mist: #D2D2D7;
+      --cloud: #F5F5F7;
+      --snow: #FAFAFA;
+      --white: #FFFFFF;
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-wash: #FAF6EF;
+      --gold-deep: #A68B4B;
+      --blush: #F2D4D7;
+      --blush-light: #FBF0F1;
+      --sage: #B8C5B0;
+      --sage-light: #EFF3ED;
+      --lavender: #C5B8D9;
+      --lavender-light: #F0ECF5;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+      --hand: 'Caveat', cursive;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--charcoal);
+      background: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .cabinet { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ═══ HEADER ═══ */
+    .header {
+      text-align: center;
+      padding: 6rem 0 3rem;
+    }
+    .header-label {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--noir);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+    }
+    .header-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 2rem auto;
+    }
+    .header-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--grey);
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    .header-quote cite {
+      display: block;
+      font-style: normal;
+      font-family: var(--sans);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--silver);
+      margin-top: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ═══ SPECIMENS ═══ */
+    .specimens {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .specimen {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all .5s cubic-bezier(.16,1,.3,1);
+      position: relative;
+    }
+    .specimen:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,169,110,0.2);
+      border-color: var(--gold-light);
+    }
+    .specimen-top {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .specimen:nth-child(1) .specimen-top {
+      background: linear-gradient(160deg, var(--gold-wash) 0%, var(--white) 100%);
+    }
+    .specimen:nth-child(2) .specimen-top {
+      background: linear-gradient(160deg, var(--lavender-light) 0%, var(--white) 100%);
+    }
+    .specimen:nth-child(3) .specimen-top {
+      background: linear-gradient(160deg, var(--sage-light) 0%, var(--white) 100%);
+    }
+    .specimen-icon {
+      font-size: 3rem;
+      position: relative;
+      z-index: 1;
+      transition: transform .5s cubic-bezier(.16,1,.3,1);
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.06));
+    }
+    .specimen:hover .specimen-icon { transform: scale(1.12) rotate(-4deg); }
+    .specimen-label {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 4px 12px;
+      border-radius: 20px;
+      z-index: 1;
+    }
+    .specimen-body {
+      padding: 1.5rem 1.6rem 1.8rem;
+    }
+    .specimen-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--noir);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .specimen-desc {
+      font-size: 0.82rem;
+      color: var(--grey);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .specimen-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .specimen:nth-child(1) .specimen-tag { background: var(--gold-wash); color: var(--gold-deep); }
+    .specimen:nth-child(2) .specimen-tag { background: var(--lavender-light); color: #6E5488; }
+    .specimen:nth-child(3) .specimen-tag { background: var(--sage-light); color: #5A7A50; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center;
+      padding: 3rem 0 4rem;
+      border-top: 1px solid var(--cloud);
+      margin-top: 3rem;
+    }
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--noir);
+      letter-spacing: -0.01em;
+    }
+    .footer-info {
+      font-size: 0.72rem;
+      color: var(--silver);
+      margin-top: 0.4rem;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+    .footer-hand {
+      font-family: var(--hand);
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .header { padding: 4rem 0 2rem; }
+      .specimens { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cabinet">
+    <div class="header reveal">
+      <div class="header-label">Beyond Research</div>
+      <h1>Cabinet of Curiosities</h1>
+      <div class="header-line"></div>
+      <div class="header-quote">
+        "The cabinet of curiosities constituted an attempt to produce an overall picture of this world, the cosmos. Within limited space, it presented a microcosm."
+        <cite>On the Wunderkammer tradition</cite>
+      </div>
+    </div>
+
+    <div class="specimens">
+      <a class="specimen reveal" href="interview-instinct.html" style="transition-delay: 0.1s;">
+        <div class="specimen-top">
+          <span class="specimen-icon">🐝</span>
+          <span class="specimen-label">Interactive</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-title">Interview Instinct</div>
+          <div class="specimen-desc">Discover your natural interview style through animal archetypes. Build your HIVE story. Practice structured thinking.</div>
+          <span class="specimen-tag">IWG Workshop #2</span>
+        </div>
+      </a>
+      <a class="specimen reveal" href="iwg-handout.html" style="transition-delay: 0.2s;">
+        <div class="specimen-top">
+          <span class="specimen-icon">🗺️</span>
+          <span class="specimen-label">Workshop Guide</span>
+        </div>
+        <div class="specimen-body">
+          <div class="specimen-title">AI Collaboration Interviews</div>
+          <div class="specimen-desc">The complete workshop companion: frameworks, statistics, timelines, and exercises for the AI-era job market.</div>
+          <span class="specimen-tag">Feb 24, 2026</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="footer reveal">
+      <div class="footer-name">Bella Kang</div>
+      <div class="footer-info">
+        M.A. Advertising · Graduate Global Impact Consultant<br>
+        Office of Career &amp; Life Design · UT Austin · Spring 2026
+      </div>
+      <div class="footer-hand">every specimen tells a story ✦</div>
+    </div>
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

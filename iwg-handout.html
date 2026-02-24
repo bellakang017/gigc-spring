@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IWG #2 — Preparing for AI Collaboration Interviews</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+  <meta name="theme-color" content="#1D1D1F">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #000000;
+      --noir: #1D1D1F;
+      --charcoal: #424245;
+      --grey: #6E6E73;
+      --silver: #86868B;
+      --mist: #D2D2D7;
+      --cloud: #F5F5F7;
+      --snow: #FAFAFA;
+      --white: #FFFFFF;
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-wash: #FAF6EF;
+      --gold-deep: #A68B4B;
+      --sage: #6B8F71;
+      --sage-light: #EFF3ED;
+      --ocean: #5B7FA5;
+      --ocean-light: #ECF1F6;
+      --berry: #A05B6B;
+      --berry-light: #F5EAED;
+      --lavender: #8B7BAE;
+      --lavender-light: #F0ECF5;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+      --hand: 'Caveat', cursive;
+      --radius: 16px;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      font-weight: 400; font-size: 16px;
+      line-height: 1.65; color: var(--charcoal);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media print {
+      body { background: white; font-size: 10pt; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .hero { min-height: auto; padding: 2rem 0; }
+      section { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 56vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+      background: var(--white);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 600px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mist), transparent);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 1.2rem;
+      background: var(--cloud);
+      border: 1px solid var(--mist);
+      border-radius: 30px;
+      font-size: 0.68rem; font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+      font-weight: 400; letter-spacing: -0.03em;
+      line-height: 1.12; color: var(--noir);
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 0.95rem; font-weight: 300; color: var(--grey);
+      margin-top: 1rem; max-width: 520px; line-height: 1.7;
+    }
+    .hero-sub em { font-style: italic; color: var(--charcoal); font-weight: 400; }
+    .hero-meta {
+      margin-top: 1.5rem; font-size: 0.78rem;
+      color: var(--silver); line-height: 1.6;
+    }
+
+    /* ═══ SHARED ═══ */
+    .divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1rem; margin: 3rem auto; max-width: 300px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mist), transparent);
+    }
+    .divider-icon { font-size: 0.65rem; color: var(--gold); }
+    .section-header { text-align: center; margin-bottom: 2rem; }
+    .section-header h2 {
+      font-family: var(--serif); font-size: 1.8rem;
+      font-weight: 400; letter-spacing: -0.02em; color: var(--noir);
+    }
+    .section-header h2 em { font-style: italic; color: var(--gold); }
+    .section-header p {
+      font-size: 0.88rem; color: var(--grey); margin-top: 0.3rem; font-weight: 300;
+    }
+
+    /* ═══ STATS ═══ */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    @media (max-width: 600px) { .stat-grid { grid-template-columns: 1fr; } }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.8rem 1.2rem; text-align: center;
+      transition: all .4s cubic-bezier(.16,1,.3,1);
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.06);
+      border-color: var(--gold-light);
+    }
+    .stat-num {
+      font-family: var(--serif); font-size: 2.6rem; font-weight: 700;
+      color: var(--noir); letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-size: 0.75rem; color: var(--grey);
+      margin-top: 0.4rem; line-height: 1.5; font-weight: 300;
+    }
+
+    .insight-box {
+      background: var(--cloud);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      margin-bottom: 2rem;
+      font-size: 0.88rem; color: var(--charcoal); line-height: 1.75;
+      position: relative;
+    }
+    .insight-box::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--gold);
+      border-radius: 3px 0 0 3px;
+    }
+    .insight-box strong { color: var(--noir); font-weight: 600; }
+
+    /* ═══ FRAMEWORKS ═══ */
+    .fw-cards {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 600px) { .fw-cards { grid-template-columns: 1fr; } }
+    .fw-card {
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      transition: all .4s cubic-bezier(.16,1,.3,1);
+    }
+    .fw-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+    }
+    .fw-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-family: var(--serif); font-weight: 700; font-size: 0.82rem;
+      color: var(--white); margin-bottom: 0.6rem;
+    }
+    .fw-card:nth-child(1) .fw-num { background: var(--ocean); }
+    .fw-card:nth-child(2) .fw-num { background: var(--sage); }
+    .fw-card:nth-child(3) .fw-num { background: var(--berry); }
+    .fw-card:nth-child(4) .fw-num { background: var(--noir); }
+    .fw-card h3 {
+      font-family: var(--serif); font-size: 0.95rem;
+      font-weight: 600; color: var(--noir); margin-bottom: 0.3rem;
+    }
+    .fw-card p {
+      font-size: 0.8rem; color: var(--grey); line-height: 1.6; font-weight: 300;
+    }
+
+    /* ═══ INTERNATIONAL ═══ */
+    .intl-box {
+      background: var(--noir);
+      border-radius: 24px;
+      padding: 2.5rem;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .intl-box::before {
+      content: '';
+      position: absolute;
+      top: -50%; right: -30%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .intl-box h3 {
+      font-family: var(--serif); font-size: 1.15rem;
+      font-weight: 500; color: var(--white);
+      margin-bottom: 0.6rem; position: relative;
+    }
+    .intl-box p {
+      font-size: 0.88rem; color: var(--silver);
+      line-height: 1.7; position: relative;
+    }
+    .intl-stats {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 1.2rem; position: relative;
+    }
+    .intl-stat {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.8rem 1.2rem; border-radius: 12px;
+      font-size: 0.78rem; color: var(--silver);
+    }
+    .intl-stat strong {
+      color: var(--gold); font-family: var(--serif);
+      font-size: 1.3rem; display: block; font-weight: 700;
+    }
+
+    /* ═══ TRANSFER ═══ */
+    .transfer-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.8rem; margin-bottom: 3rem;
+    }
+    @media (max-width: 500px) { .transfer-grid { grid-template-columns: 1fr; } }
+    .transfer-item {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 12px;
+      font-size: 0.82rem; color: var(--charcoal);
+      transition: all .3s;
+    }
+    .transfer-item:hover {
+      border-color: var(--gold-light);
+      transform: translateX(4px);
+    }
+    .transfer-check { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
+
+    /* ═══ TIMELINE ═══ */
+    .timeline { margin: 2rem 0; }
+    .tl-item { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start; }
+    .tl-time {
+      flex-shrink: 0; width: 54px; font-size: 0.75rem; font-weight: 600;
+      color: var(--gold); text-align: right; padding-top: 0.7rem;
+      font-family: var(--serif);
+    }
+    .tl-dot {
+      flex-shrink: 0; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--noir);
+      margin-top: 0.72rem; position: relative;
+      border: 2px solid var(--gold);
+    }
+    .tl-dot::after {
+      content: ''; position: absolute; top: 10px; left: 2px;
+      width: 2px; height: calc(100% + 22px); background: var(--mist);
+    }
+    .tl-item:last-child .tl-dot::after { display: none; }
+    .tl-content {
+      flex: 1; background: var(--white);
+      border: 1px solid var(--mist);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+      transition: all .3s;
+    }
+    .tl-content:hover {
+      border-color: var(--gold-light);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .tl-content h4 {
+      font-family: var(--serif); font-size: 0.88rem;
+      font-weight: 600; color: var(--noir); margin-bottom: 0.2rem;
+    }
+    .tl-content p { font-size: 0.75rem; color: var(--grey); line-height: 1.55; font-weight: 300; }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      text-align: center; padding: 2.5rem 2rem 3rem;
+      font-size: 0.75rem; color: var(--silver);
+      line-height: 1.8;
+      border-top: 1px solid var(--cloud);
+      margin-top: 2rem;
+    }
+    .footer strong { color: var(--charcoal); font-weight: 600; }
+    .footer-cute {
+      font-family: var(--hand);
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-top: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <span class="hero-badge">🐝 International Job Summit · Workshop #2</span>
+    <h1>Preparing for <em>AI Collaboration</em><br>Interviews</h1>
+    <p class="hero-sub">Companies are adding AI to their interview process. If that sounds intimidating — don't worry, we'll break it down together.</p>
+    <div class="hero-meta">Tuesday, February 24, 2026 · 3:00–4:00 PM · FAC 2.134<br>Office of Career &amp; Life Design · UT Austin</div>
+  </header>
+
+  <div class="container">
+    <div class="divider"><span class="divider-icon">✦</span></div>
+
+    <section class="reveal">
+      <div class="section-header">
+        <h2>What's <em>Changing</em></h2>
+        <p>The job market is shifting fast. Here's what's happening right now.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num">93%</div><div class="stat-label">of recruiters plan to increase AI in hiring this year</div></div>
+        <div class="stat-card"><div class="stat-num">77%</div><div class="stat-label">of hiring teams regularly encounter AI-generated applications</div></div>
+        <div class="stat-card"><div class="stat-num">$2.7B</div><div class="stat-label">BCG revenue from AI consulting last year</div></div>
+      </div>
+      <div class="insight-box">
+        <strong>The good news:</strong> The top skills employers want are critical thinking, problem solving, time management, and adaptability — skills AI can't replicate. What companies are really testing isn't technical AI expertise. It's <strong>structured thinking, clear communication, and sound judgment.</strong>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="section-header">
+        <h2>What You'll <em>Practice</em></h2>
+        <p>Four frameworks that transfer to any interview, any field.</p>
+      </div>
+      <div class="fw-cards">
+        <div class="fw-card"><div class="fw-num">1</div><h3>ASK &rarr; Frame clear questions</h3><p>Turn vague problems into specific, answerable questions — the exact skill companies test when candidates work with AI tools.</p></div>
+        <div class="fw-card"><div class="fw-num">2</div><h3>STRUCTURE &rarr; Break it down</h3><p>Master MECE thinking: split any messy problem into clean buckets that cover everything. A golden rule across consulting and tech.</p></div>
+        <div class="fw-card"><div class="fw-num">3</div><h3>REFINE &rarr; Review &amp; iterate</h3><p>Practice evaluating information critically and improving your first response under time pressure. Use AI as a support tool while you drive.</p></div>
+        <div class="fw-card"><div class="fw-num">4</div><h3>STORY &rarr; Experience &rarr; Impact</h3><p>Transform "I worked on a research project" into "I identified a gap, designed a methodology, and shifted how the field understands X."</p></div>
+      </div>
+    </section>
+
+    <div class="intl-box reveal">
+      <h3>Why This Matters for International Scholars</h3>
+      <p>Your global perspective, cross-cultural fluency, and adaptability are exactly what companies need for AI-era challenges. But you have to know how to communicate that strategically. This workshop gives you the frameworks to translate your unique experiences into competitive advantage.</p>
+      <div class="intl-stats">
+        <div class="intl-stat"><strong>50%</strong> of employers say applicants lack relevant experience</div>
+        <div class="intl-stat"><strong>26%</strong> struggle to evaluate informal or self-taught skills</div>
+      </div>
+    </div>
+
+    <section class="reveal">
+      <div class="section-header">
+        <h2>These Skills <em>Transfer</em> Everywhere</h2>
+      </div>
+      <div class="transfer-grid">
+        <div class="transfer-item"><span class="transfer-check">&#10003;</span> Technical interviews at any company</div>
+        <div class="transfer-item"><span class="transfer-check">&#10003;</span> Research proposal defenses &amp; grants</div>
+        <div class="transfer-item"><span class="transfer-check">&#10003;</span> Networking conversations &amp; elevator pitches</div>
+        <div class="transfer-item"><span class="transfer-check">&#10003;</span> Job talks explaining research to non-experts</div>
+      </div>
+    </section>
+
+    <div class="divider"><span class="divider-icon">✦</span></div>
+
+    <section class="reveal page-break">
+      <div class="section-header">
+        <h2>Workshop <em>Timeline</em></h2>
+        <p>50 minutes of structured practice.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-time">3:00</div><div class="tl-dot"></div><div class="tl-content"><h4>Welcome &amp; Name Tags</h4><p>Settle in, find your table, pick up your name tag and handout.</p></div></div>
+        <div class="tl-item"><div class="tl-time">3:05</div><div class="tl-dot"></div><div class="tl-content"><h4>Find Your Instinct</h4><p>Discover your natural interview style. Pick your animal, identify your superpower.</p></div></div>
+        <div class="tl-item"><div class="tl-time">3:12</div><div class="tl-dot"></div><div class="tl-content"><h4>Build Your HIVE Story</h4><p>Use your story prompt: Habitat &rarr; Initiative &rarr; Venture &rarr; Effect.</p></div></div>
+        <div class="tl-item"><div class="tl-time">3:22</div><div class="tl-dot"></div><div class="tl-content"><h4>60-Second Partner Practice</h4><p>Tell your HIVE story in 60 seconds. Partner gives feedback. Switch.</p></div></div>
+        <div class="tl-item"><div class="tl-time">3:32</div><div class="tl-dot"></div><div class="tl-content"><h4>Sharpen Your Instinct</h4><p>Practice thinking frameworks: ASK &rarr; STRUCTURE &rarr; REFINE.</p></div></div>
+        <div class="tl-item"><div class="tl-time">3:48</div><div class="tl-dot"></div><div class="tl-content"><h4>Wrap-up</h4><p>Key takeaways and how to keep practicing.</p></div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="footer">
+    <strong>Bella Kang</strong> · M.A. Advertising · Graduate Global Impact Consultant<br>
+    Office of Career &amp; Life Design, UT Austin · Spring 2026<br>
+    <div class="footer-cute">all scholars welcome ✦</div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
