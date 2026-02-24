@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IWG #2 — AI Collaboration Interviews</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080A;--surface:#0F0F12;--text:#EEEAE5;--text-2:#B0ACA5;--text-3:#706C65;--border:#222228;--accent:oklch(0.82 0.14 60);--rose:#F07078;--iris:#B0A0E0;--sage:#78C076;--sky:#70B8E0;--amber:#E0B858;--peach:#E09870;--mint:#68C8A8}
+html,body{height:100%;overflow:hidden;font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--bg)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.02;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px}
+.slide{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 3rem;opacity:0;pointer-events:none;z-index:1;transition:opacity .4s ease,transform .4s ease;transform:translateY(8px);overflow-y:auto}
+.slide.active{opacity:1;pointer-events:all;transform:translateY(0)}
+.slide.exiting{opacity:0;transform:translateY(-8px)}
+.nav-bar{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:200;padding:8px 14px;background:rgba(8,8,10,.9);backdrop-filter:blur(16px);border-radius:100px;border:1px solid var(--border)}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .25s}
+.nav-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 10px oklch(0.82 0.14 60 / .5)}
+.nav-dot:hover{background:var(--text-3)}
+.sc{position:fixed;top:1rem;right:1.5rem;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;color:var(--text-3);z-index:200;letter-spacing:.1em}
+.mark{position:fixed;top:1rem;left:1.5rem;z-index:200;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--text-3);letter-spacing:.15em;text-transform:uppercase}
+.nav-hint{position:fixed;bottom:3.2rem;left:50%;transform:translateX(-50%);font-size:.68rem;color:var(--text-3);z-index:200}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,5.5rem);color:var(--text);line-height:1.05;font-weight:800;letter-spacing:-.03em;text-transform:uppercase}
+h1 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);text-transform:none;font-weight:400;letter-spacing:0}
+h2{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4.5vw,3.4rem);color:var(--text);line-height:1.12;font-weight:700;letter-spacing:-.02em;text-transform:uppercase}
+h2 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);text-transform:none;font-weight:400;letter-spacing:0}
+h3{font-family:'Syne',sans-serif;font-size:clamp(1.1rem,2.2vw,1.5rem);color:var(--text);line-height:1.3;font-weight:600}
+.sub{font-size:clamp(.95rem,1.4vw,1.1rem);color:var(--text-2);line-height:1.65;max-width:560px}
+.lbl{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.tag{display:inline-flex;padding:.35rem .85rem;border-radius:4px;font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.04em;border:1px solid var(--border)}
+.divider{width:40px;height:2px;background:var(--accent);margin:.6rem auto;transform-origin:left}
+.slide.active .divider{animation:lineGrow .5s ease both}
+.mb{--c:var(--accent);--r:14px;--bw:1px;--gw:80px;--dur:3.5s;position:relative;overflow:hidden;border-radius:var(--r);padding:var(--bw);background:var(--surface)}
+.mb::before{content:'';position:absolute;inset:0;border-radius:var(--r);border:var(--bw) solid var(--border);pointer-events:none;z-index:2}
+.mb::after{content:'';position:absolute;z-index:3;pointer-events:none;width:var(--gw);height:var(--gw);border-radius:50%;background:radial-gradient(circle,var(--c) 0%,transparent 70%);offset-path:rect(0 100% 100% 0 round var(--r));offset-distance:0%;translate:-50% -50%;animation:orbit var(--dur) linear infinite}
+@keyframes orbit{to{offset-distance:100%}}
+.mb>.inner{position:relative;z-index:4;background:var(--surface);border-radius:calc(var(--r) - var(--bw))}
+.mb-card>.inner{padding:1.2rem 1.3rem;text-align:left}
+.mb-firm>.inner{padding:1rem 1.1rem;text-align:left}
+.mb-step>.inner{padding:1rem 1.2rem;text-align:left;border-left:3px solid var(--c)}
+.mb-hive>.inner{display:flex;align-items:center;gap:.8rem;padding:.85rem 1.1rem;text-align:left}
+.mb-dim>.inner{padding:.9rem 1.2rem;text-align:left;border-left:3px solid var(--c)}
+.mb-prac>.inner{padding:.85rem 1.1rem;text-align:left;border-left:3px solid var(--c)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideL{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideR{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.slide.active .au{animation:fadeUp .5s ease both}
+.slide.active .af{animation:fadeIn .5s ease both}
+.slide.active .al{animation:slideL .45s ease both}
+.slide.active .ar{animation:slideR .45s ease both}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}
+.d5{animation-delay:.3s}.d6{animation-delay:.36s}.d7{animation-delay:.42s}.d8{animation-delay:.48s}
+.stat{text-align:center;padding:1rem;flex:1;min-width:140px;max-width:200px}
+.stat-num{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,5.5vw,4rem);font-weight:800;line-height:1;color:var(--accent)}
+.stat-lbl{font-size:.88rem;color:var(--text-2);margin-top:.3rem;line-height:1.45}
+.card-row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;max-width:960px}
+.firm-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text)}
+.firm-tool{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;letter-spacing:.04em;margin:.15rem 0}
+.firm-desc{font-size:.88rem;color:var(--text-2);line-height:1.5}
+.step-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
+.step-desc{font-size:.92rem;color:var(--text-2);margin-top:.15rem;line-height:1.5}
+.hive-letter{flex-shrink:0;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:1.4rem;color:var(--bg)}
+.hive-lbl{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text)}
+.hive-desc{font-size:.9rem;color:var(--text-2);margin-top:.05rem}
+.dim-phase{font-family:'Space Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.dim-axis{display:flex;justify-content:space-between;font-size:.95rem;color:var(--text-2)}
+.dim-sci{font-size:.78rem;color:var(--text-3);margin-top:.2rem;font-style:italic}
+.prac-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--text)}
+.prac-desc{font-size:.88rem;color:var(--text-2);margin-top:.1rem;line-height:1.5}
+.animal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;max-width:780px;width:100%}
+.a-inner{padding:.7rem .5rem;text-align:center}
+.a-inner .em{font-size:2rem;display:block;margin-bottom:.2rem}
+.a-inner .nm{font-family:'Instrument Serif',serif;font-size:1.05rem;color:var(--text)}
+.a-inner .tt{font-size:.78rem;color:var(--text-2)}
+.a-inner .code{font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--text-3);margin-top:.15rem}
+@media(max-width:768px){.slide{padding:1.5rem 1rem}.animal-grid{grid-template-columns:repeat(2,1fr)}.card-row{flex-direction:column;align-items:center}.mark{display:none}}
+</style>
+</head>
+<body>
+<div class="mark">IWG—02</div>
+<div class="slide active" id="s0">
+  <div class="lbl au" style="color:var(--accent)">International Job Summit · Workshop #2 · Feb 24 2026</div>
+  <div class="divider d1"></div>
+  <h1 class="au d2">PREPARING FOR<br><em>AI Collaboration</em><br>INTERVIEWS</h1>
+  <p class="sub au d3" style="margin:.6rem 0">Companies are adding AI to their interviews.<br>Are you ready for this change?</p>
+  <div class="au d4" style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin:.6rem 0">
+    <span class="tag" style="color:var(--rose);border-color:var(--rose)">AI PREP</span>
+    <span class="tag" style="color:var(--iris);border-color:var(--iris)">4-STEP</span>
+    <span class="tag" style="color:var(--sage);border-color:var(--sage)">QUIZ</span>
+    <span class="tag" style="color:var(--amber);border-color:var(--amber)">STORY</span>
+  </div>
+  <div class="mb au d5" style="--c:var(--accent);--gw:60px;--dur:4s;display:inline-block">
+    <div class="inner" style="padding:.4rem 1.2rem">
+      <span style="font-size:.88rem;color:var(--text-3)">Bella Kang · Graduate Global Impact Consultant · UT Austin OCLD</span>
+    </div>
+  </div>
+</div>
+<div class="slide" id="s1">
+  <div class="lbl au" style="color:var(--rose)">The Landscape</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">HIRING IS<br><em>Shifting Fast</em></h2>
+  <p class="sub au d3" style="margin:.5rem 0 .8rem">If that sounds intimidating, you're not alone.</p>
+  <div class="card-row au d4">
+    <div class="stat"><div class="stat-num" data-scramble="93%">93%</div><div class="stat-lbl">of recruiters increasing AI use in 2026</div></div>
+    <div class="stat"><div class="stat-num" data-scramble="80%">80%</div><div class="stat-lbl">of enterprises using AI in hiring by year-end</div></div>
+    <div class="stat"><div class="stat-num" data-scramble="77%">77%</div><div class="stat-lbl">encounter AI-generated applications regularly</div></div>
+    <div class="stat"><div class="stat-num" data-scramble="34%">34%</div><div class="stat-lbl">use AI tools to facilitate interviews</div></div>
+  </div>
+  <p class="au d5" style="font-size:.78rem;color:var(--text-3);margin-top:.5rem;font-style:italic">Sources: DemandSage 2026, SHRM, Resume.org, HireVue</p>
+</div>
+<div class="slide" id="s2">
+  <div class="lbl au" style="color:var(--iris)">The Shift</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">WHAT ARE THEY<br><em>Actually Testing?</em></h2>
+  <p class="sub au d3" style="margin:.4rem 0 .7rem">Not technical AI expertise. They're testing HOW you think.</p>
+  <div style="max-width:520px;width:100%">
+    <div class="mb mb-card al d4" style="--c:var(--rose);--gw:70px;margin-bottom:.6rem">
+      <div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)">The Old Question</div><div style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);margin:.2rem 0">"Have they done this before?"</div><div style="font-size:.92rem;color:var(--text-3)">Resume → Keywords → Phone screen</div></div>
+    </div>
+    <div style="text-align:center;font-size:1rem;color:var(--text-3);margin:.3rem 0" class="af d5">↓ ↓ ↓</div>
+    <div class="mb mb-card ar d6" style="--c:var(--sage);--gw:70px">
+      <div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sage)">The New Question</div><div style="font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);margin:.2rem 0">"Can they do this well — with AI?"</div><div style="font-size:.92rem;color:var(--text-3)">Structured thinking → Clear communication → Sound judgment</div></div>
+    </div>
+  </div>
+  <div class="mb au d7" style="--c:var(--accent);--gw:50px;--dur:4s;margin-top:.7rem;display:inline-block">
+    <div class="inner" style="padding:.4rem 1rem;border-radius:6px">
+      <span style="font-size:.92rem;color:var(--accent)">Good news: critical thinking + adaptability = what AI cannot replicate</span>
+    </div>
+  </div>
+</div>
+<div class="slide" id="s3">
+  <div class="lbl au" style="color:var(--amber)">Intelligence</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">HOW TOP FIRMS<br><em>Use AI</em> IN 2026</h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Different tests, same core skills</p>
+  <div class="card-row">
+    <div class="mb mb-firm al d4" style="--c:var(--sky);flex:1;min-width:200px;max-width:260px"><div class="inner"><div class="firm-name">MCKINSEY</div><div class="firm-tool" style="color:var(--sky)">SOLVE GAME + LILLI AI</div><div class="firm-desc">New 2026: collaborate live with Lilli AI. Tests judgment not tech. ~85% fail Solve screening.</div></div></div>
+    <div class="mb mb-firm ar d5" style="--c:var(--rose);flex:1;min-width:200px;max-width:260px"><div class="inner"><div class="firm-name">BCG</div><div class="firm-tool" style="color:var(--rose)">CASEY CHATBOT + VIDEO</div><div class="firm-desc">AI chatbot case: 8-12 questions in 25-35 min + 1-min video rec to camera.</div></div></div>
+    <div class="mb mb-firm al d6" style="--c:var(--iris);flex:1;min-width:200px;max-width:260px"><div class="inner"><div class="firm-name">DELOITTE</div><div class="firm-tool" style="color:var(--iris)">ASSESSMENT + GROUP CASE</div><div class="firm-desc">Online QI + behavioral, then group case with 3-6 candidates observed live.</div></div></div>
+    <div class="mb mb-firm ar d7" style="--c:var(--sage);flex:1;min-width:200px;max-width:260px"><div class="inner"><div class="firm-name">TECH + OTHERS</div><div class="firm-tool" style="color:var(--sage)">HIREVUE AI VIDEO</div><div class="firm-desc">Google, Cisco, Meta use AI-scored video. 20M+ HireVue interviews in Q1 2024.</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s4">
+  <div class="lbl au" style="color:var(--sage)">Framework</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">THE <em>4 Skills</em><br>THEY ALL TEST</h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Today's workshop trains all four</p>
+  <div style="max-width:520px;width:100%;display:flex;flex-direction:column;gap:.5rem">
+    <div class="mb mb-step al d4" style="--c:var(--rose)"><div class="inner"><div class="step-title"><span style="color:var(--rose)">① ASK</span> — Frame clear questions</div><div class="step-desc">Turn vague problems into specific, answerable questions.</div></div></div>
+    <div class="mb mb-step ar d5" style="--c:var(--iris)"><div class="inner"><div class="step-title"><span style="color:var(--iris)">② STRUCTURE</span> — Break it down (MECE)</div><div class="step-desc">No gaps, no overlaps. Golden rule across consulting + tech.</div></div></div>
+    <div class="mb mb-step al d6" style="--c:var(--sage)"><div class="inner"><div class="step-title"><span style="color:var(--sage)">③ REFINE</span> — Review, iterate, own it</div><div class="step-desc">Evaluate critically. Use AI as support while YOU drive thinking.</div></div></div>
+    <div class="mb mb-step ar d7" style="--c:var(--amber)"><div class="inner"><div class="step-title"><span style="color:var(--amber)">④ STORY</span> — Turn experience into impact</div><div class="step-desc">This is where your animal instinct quiz comes in.</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s5">
+  <div class="lbl au" style="color:var(--mint)">Your Edge</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">WHY THIS MATTERS FOR<br><em>International</em> SCHOLARS</h2>
+  <div class="card-row au d3" style="margin:.6rem 0">
+    <div class="stat"><div class="stat-num">50%</div><div class="stat-lbl">of employers say applicants lack relevant experience</div></div>
+    <div class="stat"><div class="stat-num">26%</div><div class="stat-lbl">struggle to evaluate informal or self-taught skills</div></div>
+  </div>
+  <div class="mb au d4" style="--c:var(--sage);--gw:80px;max-width:520px;width:100%">
+    <div class="inner" style="padding:1rem 1.2rem;text-align:left">
+      <div style="font-size:.95rem;color:var(--sage);font-weight:700;margin-bottom:.2rem">YOUR ADVANTAGE →</div>
+      <div style="font-size:.95rem;color:var(--text-2);line-height:1.55">Cross-cultural fluency + adaptability + global perspective. But you need to communicate that strategically. This workshop gives you the frameworks.</div>
+    </div>
+  </div>
+  <p class="au d5" style="font-size:.85rem;color:var(--text-3);margin-top:.5rem;max-width:420px">All scholars welcome. Skills transfer to: tech interviews, research defenses, grant apps, networking, job talks.</p>
+</div>
+<div class="slide" id="s6">
+  <div class="lbl au" style="color:var(--iris)">Step ④ Starts Here</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">THREE <em>Dimensions</em></h2>
+  <p class="sub au d3" style="margin:.3rem 0 .5rem">Grounded in peer-reviewed behavioral science</p>
+  <div style="max-width:580px;width:100%;display:flex;flex-direction:column;gap:.5rem">
+    <div class="mb mb-dim al d4" style="--c:var(--rose)"><div class="inner"><div class="dim-phase" style="color:var(--rose)">Phase 1 / Motivation</div><h3>What Drives You?</h3><div class="dim-axis"><span>💖 Heart — Relatedness</span><span>🧠 Mind — Competence</span></div><div class="dim-sci">Self-Determination Theory — Deci & Ryan, 2000</div></div></div>
+    <div class="mb mb-dim ar d5" style="--c:var(--iris)"><div class="inner"><div class="dim-phase" style="color:var(--iris)">Phase 2 / Environment</div><h3>Where You Thrive?</h3><div class="dim-axis"><span>🏡 Structured — Prevention</span><span>🔥 Adaptive — Promotion</span></div><div class="dim-sci">Regulatory Focus Theory — Higgins, 1997</div></div></div>
+    <div class="mb mb-dim al d6" style="--c:var(--sage)"><div class="inner"><div class="dim-phase" style="color:var(--sage)">Phase 3 / Contribution</div><h3>How You Contribute?</h3><div class="dim-axis"><span>🔧 Specialist — Depth</span><span>🌈 Generalist — Breadth</span></div><div class="dim-sci">Cognitive Style Theory — Kirton, 1976</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s7">
+  <div class="lbl au" style="color:var(--sage)">2 × 2 × 2 Matrix</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">THE <em>Eight</em> PROFILES</h2>
+  <p class="sub au d3" style="margin:.3rem 0 .5rem">Every combination = unique interview instinct</p>
+  <div class="animal-grid au d4">
+    <div class="mb" style="--c:var(--sage);--gw:50px;--dur:3s"><div class="inner a-inner"><span class="em">🐑</span><div class="nm">Baby Lamb</div><div class="tt">Trust Builder</div><div class="code">H·C·C</div></div></div>
+    <div class="mb" style="--c:var(--amber);--gw:50px;--dur:3.2s"><div class="inner a-inner"><span class="em">🐱</span><div class="nm">Wise Cat</div><div class="tt">Room Reader</div><div class="code">H·C·F</div></div></div>
+    <div class="mb" style="--c:var(--peach);--gw:50px;--dur:3.4s"><div class="inner a-inner"><span class="em">🐕</span><div class="nm">Loyal Pup</div><div class="tt">Action Hero</div><div class="code">H·O·C</div></div></div>
+    <div class="mb" style="--c:var(--rose);--gw:50px;--dur:3.6s"><div class="inner a-inner"><span class="em">🐰</span><div class="nm">Social Bunny</div><div class="tt">Bridge Builder</div><div class="code">H·O·F</div></div></div>
+    <div class="mb" style="--c:var(--sky);--gw:50px;--dur:3.1s"><div class="inner a-inner"><span class="em">🦉</span><div class="nm">Night Owl</div><div class="tt">Deep Preparer</div><div class="code">M·C·C</div></div></div>
+    <div class="mb" style="--c:var(--iris);--gw:50px;--dur:3.3s"><div class="inner a-inner"><span class="em">🦊</span><div class="nm">Clever Fox</div><div class="tt">Creative Solver</div><div class="code">M·C·F</div></div></div>
+    <div class="mb" style="--c:var(--peach);--gw:50px;--dur:3.5s"><div class="inner a-inner"><span class="em">🐻</span><div class="nm">Bold Bear</div><div class="tt">Pressure Player</div><div class="code">M·O·C</div></div></div>
+    <div class="mb" style="--c:var(--mint);--gw:50px;--dur:3.7s"><div class="inner a-inner"><span class="em">🦋</span><div class="nm">Free Butterfly</div><div class="tt">Global Visionary</div><div class="code">M·O·F</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s8">
+  <div class="lbl au" style="color:var(--rose)">Live Activity</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">TAKE THE <em>Quiz</em></h2>
+  <p class="sub au d3" style="margin:.4rem 0 .8rem">Open on your phone or laptop. Gut instinct only.</p>
+  <div class="mb au d4" style="--c:var(--accent);--bw:2px;--gw:100px;--dur:3s">
+    <div class="inner" style="padding:1.3rem 2.5rem;text-align:center">
+      <div style="font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--accent);margin-bottom:.25rem">OPEN IN BROWSER</div>
+      <div style="font-family:'Syne',sans-serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:800;color:var(--text)" id="quizLink">BIT.LY/3OWMH0O</div>
+    </div>
+  </div>
+  <div class="au d5" style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:.7rem">
+    <span class="tag" style="color:var(--text-2)">24 SCENARIOS</span>
+    <span class="tag" style="color:var(--text-2)">~5 MINUTES</span>
+    <span class="tag" style="color:var(--text-2)">ANONYMOUS</span>
+  </div>
+  <p class="au d6" style="font-size:.9rem;color:var(--text-3);margin-top:.5rem">Both options are valid. No wrong answers.</p>
+</div>
+<div class="slide" id="s9">
+  <div class="lbl au" style="color:var(--sage)">Your Profile</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">READING YOUR <em>Results</em></h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Four sections in your profile card</p>
+  <div class="card-row">
+    <div class="mb mb-card al d4" style="--c:var(--rose);max-width:210px"><div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--rose)">01</div><h3 style="margin:.1rem 0">Superpower</h3><p style="font-size:.88rem;color:var(--text-2);line-height:1.5">What makes you uniquely effective</p></div></div>
+    <div class="mb mb-card ar d5" style="--c:var(--iris);max-width:210px"><div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--iris)">02</div><h3 style="margin:.1rem 0">Story Prompt</h3><p style="font-size:.88rem;color:var(--text-2);line-height:1.5">Personalized HIVE question</p></div></div>
+    <div class="mb mb-card al d6" style="--c:var(--sage);max-width:210px"><div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--sage)">03</div><h3 style="margin:.1rem 0">Dimensions</h3><p style="font-size:.88rem;color:var(--text-2);line-height:1.5">Exact scores on three axes</p></div></div>
+    <div class="mb mb-card ar d7" style="--c:var(--amber);max-width:210px"><div class="inner"><div style="font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--amber)">04</div><h3 style="margin:.1rem 0">Blind Spots</h3><p style="font-size:.88rem;color:var(--text-2);line-height:1.5">Awareness → strategy</p></div></div>
+  </div>
+</div>
+<div class="slide" id="s10">
+  <div class="lbl au" style="color:var(--rose)">Story Framework</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">THE <em>HIVE</em> METHOD</h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Your story prompt is your 🧧 red envelope</p>
+  <div style="max-width:520px;width:100%;display:flex;flex-direction:column;gap:.45rem">
+    <div class="mb mb-hive al d4" style="--c:var(--rose)"><div class="inner"><div class="hive-letter" style="background:var(--rose)">H</div><div><div class="hive-lbl">Hook</div><div class="hive-desc">The moment that changed everything</div></div></div></div>
+    <div class="mb mb-hive ar d5" style="--c:var(--iris)"><div class="inner"><div class="hive-letter" style="background:var(--iris)">I</div><div><div class="hive-lbl">Instinct</div><div class="hive-desc">YOUR natural response — your animal's superpower</div></div></div></div>
+    <div class="mb mb-hive al d6" style="--c:var(--sage)"><div class="inner"><div class="hive-letter" style="background:var(--sage)">V</div><div><div class="hive-lbl">Value</div><div class="hive-desc">Show measurable impact — what changed?</div></div></div></div>
+    <div class="mb mb-hive ar d7" style="--c:var(--amber)"><div class="inner"><div class="hive-letter" style="background:var(--amber)">E</div><div><div class="hive-lbl">Evolution</div><div class="hive-desc">Connect to growth — how this shaped who you are</div></div></div></div>
+  </div>
+</div>
+<div class="slide" id="s11">
+  <div class="lbl au" style="color:var(--sage)">Practice</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">WORKSHOP <em>Activity</em></h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Use the worksheet + your HIVE story prompt</p>
+  <div style="max-width:520px;width:100%;display:flex;flex-direction:column;gap:.5rem">
+    <div class="mb mb-step al d4" style="--c:var(--sage)"><div class="inner"><div class="step-title"><span style="color:var(--sage)">01</span> Write / 5 min ✍️</div><div class="step-desc">Draft your HIVE story using the prompt from your animal result.</div></div></div>
+    <div class="mb mb-step ar d5" style="--c:var(--iris)"><div class="inner"><div class="step-title"><span style="color:var(--iris)">02</span> Pair Share / 5 min 👥</div><div class="step-desc">Find someone with a different animal. Practice your story out loud.</div></div></div>
+    <div class="mb mb-step al d6" style="--c:var(--rose)"><div class="inner"><div class="step-title"><span style="color:var(--rose)">03</span> Refine / 3 min ✨</div><div class="step-desc">What landed? What needs work? Write one action on your worksheet.</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s12">
+  <div class="lbl au" style="color:var(--sky)">Resources</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2">PRACTICING<br><em>AI Interviews</em></h2>
+  <p class="sub au d3" style="margin:.3rem 0 .6rem">Free tools you can use right now</p>
+  <div style="max-width:520px;width:100%;display:flex;flex-direction:column;gap:.45rem">
+    <div class="mb mb-prac al d4" style="--c:var(--sky)"><div class="inner"><div class="prac-title">🤖 Practice AI Prompting</div><div class="prac-desc">Use ChatGPT/Claude: "Summarize trends in [industry]" → "List risks for [strategy]." Focus on clarity + iteration.</div></div></div>
+    <div class="mb mb-prac ar d5" style="--c:var(--iris)"><div class="inner"><div class="prac-title">🎥 Record Yourself (1 min)</div><div class="prac-desc">BCG requires 1-min video rec. Practice: recommendation + 2-3 reasons + next step.</div></div></div>
+    <div class="mb mb-prac al d6" style="--c:var(--sage)"><div class="inner"><div class="prac-title">🧩 McKinsey Solve Game</div><div class="prac-desc">Free simulations at CaseBasix. Tests systems thinking, not business knowledge.</div></div></div>
+    <div class="mb mb-prac ar d7" style="--c:var(--amber)"><div class="inner"><div class="prac-title">📋 MECE Framework</div><div class="prac-desc">Take any problem → break into 3-4 non-overlapping categories. Practice daily.</div></div></div>
+  </div>
+</div>
+<div class="slide" id="s13">
+  <div class="lbl au" style="color:var(--accent)">Key Insight</div>
+  <div class="divider d1"></div>
+  <h2 class="au d2" style="max-width:640px">THE FOCUS IS<br><em>collaboration</em><br>AND DECISION-MAKING<br>UNDER AMBIGUITY</h2>
+  <p class="sub au d3" style="margin:.5rem 0">The same skills consulting has always valued —<br>now in an AI-augmented environment.</p>
+  <div class="au d4" style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin:.5rem 0">
+    <span class="tag" style="color:var(--rose);border-color:var(--rose)">① ASK</span>
+    <span class="tag" style="color:var(--iris);border-color:var(--iris)">② STRUCTURE</span>
+    <span class="tag" style="color:var(--sage);border-color:var(--sage)">③ REFINE</span>
+    <span class="tag" style="color:var(--amber);border-color:var(--amber)">④ STORY</span>
+  </div>
+</div>
+<div class="slide" id="s14">
+  <div class="lbl au" style="color:var(--accent)">Your Competitive Edge</div>
+  <div class="divider d1"></div>
+  <h1 class="au d2">OWN YOUR<br><em>Instinct</em></h1>
+  <p class="sub au d3" style="margin:.5rem 0">Your natural instinct isn't a weakness —<br>it's the most authentic thing you bring to any room.</p>
+  <div class="mb au d4" style="--c:var(--accent);--bw:2px;--gw:80px;--dur:3s;display:inline-block">
+    <div class="inner" style="padding:.5rem 1.5rem">
+      <span style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--accent);letter-spacing:.04em">BIT.LY/3OWMH0O</span>
+    </div>
+  </div>
+  <div class="au d5" style="font-size:.88rem;color:var(--text-3);line-height:1.7;margin-top:.6rem">
+    Bella Kang · Graduate Global Impact Consultant<br>
+    UT Austin Office of Career & Life Design<br>
+    <span style="font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em">IWG WORKSHOP 02 / FEB 24 2026</span>
+  </div>
+</div>
+<div class="sc" id="sc">01 / 15</div>
+<div class="nav-hint">← → keys · swipe · click dots</div>
+<div class="nav-bar" id="nb"></div>
+<script>
+const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+function scramble(el,txt){let f=0;const dur=txt.length*3;const iv=setInterval(()=>{f++;const p=f/dur;const r=Math.floor(p*txt.length);let s='';for(let i=0;i<txt.length;i++){if(txt[i]===' ')s+=' ';else if(i<r)s+=txt[i];else s+=CHARS[Math.floor(Math.random()*CHARS.length)]}el.textContent=s;if(f>=dur){clearInterval(iv);el.textContent=txt}},25)}
+const T=15;let c=0,busy=false;
+const nb=document.getElementById('nb');
+for(let i=0;i<T;i++){const d=document.createElement('div');d.className='nav-dot'+(i===0?' active':'');d.onclick=()=>go(i);nb.appendChild(d)}
+function go(n){if(n===c||n<0||n>=T||busy)return;busy=true;const prev=document.getElementById('s'+c),next=document.getElementById('s'+n);prev.classList.add('exiting');prev.classList.remove('active');setTimeout(()=>{prev.classList.remove('exiting');next.classList.add('active');c=n;document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===c));document.getElementById('sc').textContent=String(c+1).padStart(2,'0')+' / '+String(T).padStart(2,'0');next.querySelectorAll('[data-scramble]').forEach(el=>{scramble(el,el.dataset.scramble)});const ql=next.querySelector('#quizLink');if(ql)scramble(ql,'BIT.LY/3OWMH0O');setTimeout(()=>{busy=false},200)},260)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(c+1)}if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(c-1)}if(e.key==='Home')go(0);if(e.key==='End')go(T-1)});
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX});document.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>50){d>0?go(c+1):go(c-1)}});
+setTimeout(()=>{const h=document.querySelector('.nav-hint');if(h){h.style.transition='opacity .5s';h.style.opacity='0'}},4000);
+</script>
+</body>
+</html>
